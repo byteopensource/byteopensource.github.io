@@ -326,43 +326,59 @@
     img.src = `https://avatars.githubusercontent.com/${encodeURIComponent(github)}?s=400`;
   }
 
-  // ---------- uploaded photo: check -> decode -> square-crop -> downscale. Never leaves the device ----------
+  // ---------- uploaded photo: check -> decode -> square-crop (zoomable) -> downscale. Never leaves the device ----------
   const MAX_PHOTO = 15 * 1024 * 1024;
   const photoInput = form.elements.cardPhoto;
   const removePhoto = form.querySelector(".card-photo__remove");
+
+  const zoomBox = form.querySelector(".card-zoom");
+  const zoom = form.elements.cardZoom;
+  let source = null; // the decoded photo, kept so zooming can re-crop it
+  let sourceUrl = null;
+
+  // Square from the middle, 1/zoom of the short side, scaled to 2x the polaroid window (sharp, fast to redraw).
+  function cropPhoto() {
+    const side = Math.min(source.naturalWidth, source.naturalHeight) / Number(zoom.value);
+    const out = document.createElement("canvas");
+    out.width = out.height = 704;
+    out.getContext("2d").drawImage(source, (source.naturalWidth - side) / 2, (source.naturalHeight - side) / 2, side, side, 0, 0, 704, 704);
+    upload = out;
+  }
+
+  function dropPhoto() {
+    if (sourceUrl) URL.revokeObjectURL(sourceUrl);
+    source = sourceUrl = upload = null;
+    removePhoto.hidden = zoomBox.hidden = true;
+  }
 
   async function usePhoto(file) {
     if (!file) return;
     if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) return say("That file isn't a photo. Try a JPG, PNG or WebP.");
     if (file.size > MAX_PHOTO) return say("That photo is over 15 MB. Try a smaller one.");
     const url = URL.createObjectURL(file);
+    photoInput.value = ""; // picking the same file again still works
     try {
       const img = new Image();
       img.src = url;
       await img.decode(); // browsers apply the phone's rotation (EXIF) here
-      const side = Math.min(img.naturalWidth, img.naturalHeight);
-      const out = document.createElement("canvas");
-      out.width = out.height = 704; // 2x the polaroid window: sharp, and small enough to redraw fast
-      out.getContext("2d").drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, 704, 704);
-      upload = out;
-      removePhoto.hidden = false;
+      dropPhoto();
+      source = img;
+      sourceUrl = url;
+      zoom.value = 1;
+      cropPhoto();
+      removePhoto.hidden = zoomBox.hidden = false;
       draw();
-      say("Photo added ✓ The middle of it goes on the card.");
+      say("Photo added ✓ Use Zoom to get your face in the frame.");
     } catch {
-      say("Couldn't read that photo. Try another one.");
-    } finally {
       URL.revokeObjectURL(url);
-      photoInput.value = ""; // picking the same file again still works
+      say("Couldn't read that photo. Try another one.");
     }
   }
   function say(text) { status.textContent = text; }
 
   photoInput.addEventListener("change", () => usePhoto(photoInput.files[0]));
-  removePhoto.addEventListener("click", () => {
-    upload = null;
-    removePhoto.hidden = true;
-    draw();
-  });
+  zoom.addEventListener("input", () => source && cropPhoto()); // the form's input handler redraws right after
+  removePhoto.addEventListener("click", () => { dropPhoto(); draw(); });
   tiltBox.addEventListener("dragover", (e) => { e.preventDefault(); tiltBox.classList.add("is-dropping"); });
   tiltBox.addEventListener("dragleave", () => tiltBox.classList.remove("is-dropping"));
   tiltBox.addEventListener("drop", (e) => {
