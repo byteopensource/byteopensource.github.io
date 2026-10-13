@@ -144,6 +144,22 @@ function updateGuide() {
   hint.hidden = !typed || valid;
   document.querySelectorAll("[data-u]").forEach((el) => (el.textContent = u));
 
+  // Name inside git config "...": drop characters that would break the shell quoting.
+  const gitName = f.name.replace(/["\\`$]/g, "").trim() || "Your Name";
+  document.querySelectorAll("[data-name]").forEach((el) => (el.textContent = gitName));
+
+  // Personal shortcuts, once we know who they are.
+  const shortcuts = document.querySelector(".shortcuts");
+  shortcuts.hidden = !valid;
+  if (valid) {
+    const links = {
+      fork: `https://github.com/${u}/Open-Source_BYTE_2K26`,
+      prs: `${REPO}/pulls?q=${encodeURIComponent(`is:pr author:${u}`)}`,
+      issues: `${REPO}/issues?q=${encodeURIComponent(`is:issue is:open assignee:${u}`)}`,
+    };
+    shortcuts.querySelectorAll("[data-link]").forEach((a) => (a.href = links[a.dataset.link]));
+  }
+
   const json = JSON.stringify({
     name: f.name.trim() || "Your Name",
     github: u,
@@ -403,15 +419,17 @@ fetch("stats.json")
 
 // ---------- Git, Decoded: filter the cards as you type ----------
 const cheatSearch = document.querySelector(".cheats__search input");
-const cheats = [...document.querySelectorAll(".cheat")];
+const cheats = [...document.querySelectorAll(".cheat, .word")]; // commands and glossary words
+const glossaryTitle = document.querySelector(".glossary__title");
 cheatSearch.addEventListener("input", () => {
   const words = cheatSearch.value.toLowerCase().split(/\s+/).filter(Boolean);
   let visible = 0;
   for (const c of cheats) {
-    const text = `${c.textContent} ${c.dataset.keywords}`.toLowerCase();
+    const text = `${c.textContent} ${c.dataset.keywords || ""}`.toLowerCase();
     c.hidden = !words.every((w) => text.includes(w));
     if (!c.hidden) visible++;
   }
+  glossaryTitle.hidden = !document.querySelector(".word:not([hidden])");
   document.querySelector(".cheats__empty").hidden = visible > 0;
 });
 
@@ -574,7 +592,7 @@ function print(text, cls) {
   termOut.scrollTop = termOut.scrollHeight;
 }
 
-const SECTIONS = { journey: "levels", "first-pr": "first-pr", cheatsheet: "cheatsheet", contributors: "contributors", blog: "blog", faq: "faq", ask: "ask" };
+const SECTIONS = { journey: "levels", "first-pr": "first-pr", cheatsheet: "cheatsheet", contributors: "contributors", beyond: "beyond", blog: "blog", faq: "faq", ask: "ask" };
 
 // Short fake commit hash so git log looks real.
 function hash(s) {
