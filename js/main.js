@@ -740,7 +740,7 @@ function print(text, cls) {
   termOut.scrollTop = termOut.scrollHeight;
 }
 
-const SECTIONS = { journey: "levels", "first-pr": "first-pr", cheatsheet: "cheatsheet", contributors: "contributors", beyond: "beyond", blog: "blog", faq: "faq", ask: "ask" };
+const SECTIONS = { journey: "levels", "first-pr": "first-pr", cheatsheet: "cheatsheet", contributors: "contributors", card: "card", beyond: "beyond", blog: "blog", faq: "faq", ask: "ask" };
 
 // Short fake commit hash so git log looks real.
 function hash(s) {

@@ -1505,6 +1505,50 @@ main { counter-reset: section; }
 .team__list a:hover b { color: var(--red); }
 @media (max-width: 860px) { .team { margin-left: 0; } }
 
+/* ---------- Get Your Card ---------- */
+.card-maker__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 72px);
+  margin-top: 56px;
+}
+.card-maker .details { position: relative; top: auto; } /* not sticky here: the preview is the tall side */
+.card-form__optional { font-weight: 500; letter-spacing: 0; text-transform: none; opacity: 0.6; }
+.card-form__row { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+.card-form__row .toggle { margin: 0; }
+.card-form__fun { margin: 0; font-size: 1.3rem; }
+.card-maker__status { margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--red); }
+.card-form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.card-form__actions .card-caption { font-size: 1.3rem; }
+
+/* The preview tilts towards the mouse (card.js sets --rx/--ry) */
+.card-maker__preview {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  perspective: 1200px;
+}
+.card-maker__canvas {
+  display: block;
+  width: min(100%, 460px);
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 24px 50px rgb(22 33 62 / 0.25);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.15s ease-out;
+}
+.card-maker__canvas.is-story { width: min(100%, 360px); }
+.card-maker__hint { margin: 0; font-size: 1.25rem; opacity: 0.7; }
+
+@media (max-width: 860px) {
+  .card-maker__grid { grid-template-columns: minmax(0, 1fr); }
+  .card-maker__preview { position: static; order: -1; } /* on phones, show the card first */
+  .card-maker__hint { display: none; }
+}
+
 /* ---------- 404 page ---------- */
 .lost { display: grid; align-items: center; min-height: calc(100vh - var(--header-h)); padding-block: clamp(40px, 7vw, 90px); }
 .lost__inner {

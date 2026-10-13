@@ -33,6 +33,7 @@
           <li><a href="#levels">Journey</a></li>
           <li><a href="#first-pr">First PR</a></li>
           <li><a href="#contributors">Contributors</a></li>
+          <li><a href="#card">Your card</a></li>
           <li hidden><a href="#blog">Blog</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#ask">Ask</a></li>
@@ -674,7 +675,71 @@
       </div>
     </section>
 
-    <section class="band beyond" id="beyond">
+    <section class="band card-maker" id="card">
+      <div class="container">
+
+        <div class="section-head">
+          <div>
+            <p class="kicker">Show it off</p>
+            <h2 class="display section-title">Get Your Card</h2>
+            <p class="section-lede">Make your own Open Source BYTE card in seconds. Student, maintainer, mentor or just curious, everyone gets one. Contributors get their real number on it. Post it and tag @thebyteclubnie.</p>
+          </div>
+          <p class="section-aside hand">Made on your device.<br />Nothing gets uploaded ✱</p>
+        </div>
+
+        <div class="card-maker__grid">
+          <div class="details">
+            <span class="tape"></span>
+            <p class="details__title hand">your card</p>
+            <form class="details__form card-form">
+              <label>Your name
+                <input name="cardName" autocomplete="name" maxlength="40" placeholder="e.g. Riya Sharma" />
+              </label>
+              <label>GitHub username <span class="card-form__optional">(optional)</span>
+                <input name="cardGithub" autocapitalize="off" spellcheck="false" maxlength="39" placeholder="adds your photo and your number" />
+              </label>
+              <label>From <span class="card-form__optional">(optional)</span>
+                <input name="cardFrom" maxlength="40" placeholder="college, company or city" />
+              </label>
+              <fieldset class="topics">
+                <legend>I'm a…</legend>
+                <label><input type="radio" name="cardRole" value="First-timer" checked /><span>First-timer</span></label>
+                <label><input type="radio" name="cardRole" value="Contributor" /><span>Contributor</span></label>
+                <label><input type="radio" name="cardRole" value="Maintainer" /><span>Maintainer</span></label>
+                <label><input type="radio" name="cardRole" value="Mentor" /><span>Mentor</span></label>
+                <label><input type="radio" name="cardRole" value="Open source fan" /><span>Open source fan</span></label>
+                <label><input type="radio" name="cardRole" value="Just curious" /><span>Just curious</span></label>
+              </fieldset>
+              <div class="card-form__row">
+                <div class="toggle" role="group" aria-label="Card style" data-card-style>
+                  <button type="button" aria-pressed="true" data-value="day">Day</button>
+                  <button type="button" aria-pressed="false" data-value="night">Night</button>
+                </div>
+                <div class="toggle" role="group" aria-label="Card size" data-card-size>
+                  <button type="button" aria-pressed="true" data-value="post">Post</button>
+                  <button type="button" aria-pressed="false" data-value="story">Story</button>
+                </div>
+              </div>
+              <p class="card-form__fun hand">Not feeling your superpower? <button class="link-btn card-shuffle" type="button">Shuffle it 🎲</button></p>
+              <p class="card-maker__status" role="status"></p>
+              <div class="card-form__actions">
+                <button class="btn card-download" type="button">Download PNG <span aria-hidden="true">↓</span></button>
+                <button class="btn btn--outline card-share" type="button">Share <span aria-hidden="true">↗</span></button>
+                <button class="link-btn card-caption hand" type="button">copy a caption</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card-maker__preview">
+            <canvas class="card-maker__canvas" width="1080" height="1350" role="img" aria-label="Your Open Source BYTE 2K26 card"></canvas>
+            <p class="card-maker__hint hand">move your mouse over it ↻</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="beyond" id="beyond">
       <div class="container">
 
         <div class="section-head">
@@ -731,7 +796,7 @@
     </section>
 
     <!-- Filled from blogs.json. Stays hidden until there's at least one post. -->
-    <section class="blog" id="blog" hidden>
+    <section class="band blog" id="blog" hidden>
       <div class="container">
 
         <div class="section-head">
@@ -763,7 +828,7 @@
       </div>
     </section>
 
-    <section class="band faq" id="faq">
+    <section class="faq" id="faq">
       <div class="container faq__inner">
 
         <div class="faq__side">
@@ -816,7 +881,7 @@
 
       </div>
     </section>
-    <section class="ask-us" id="ask">
+    <section class="band ask-us" id="ask">
       <div class="container">
 
         <div class="section-head">
@@ -955,5 +1020,6 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/card.js"></script>
 </body>
 </html>

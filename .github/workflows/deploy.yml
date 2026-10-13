@@ -46,8 +46,8 @@ jobs:
       - name: Stamp CSS and JS links with the commit
         run: |
           v="${GITHUB_SHA::7}"
-          sed -i -E "s#(css/style\.css|js/main\.js)\"#\1?v=$v\"#g" index.html 404.html blog/*.html
-          grep -ho 'style\.css?v=[0-9a-f]*\|main\.js?v=[0-9a-f]*' index.html 404.html blog/*.html | sort | uniq -c
+          sed -i -E "s#(css/style\.css|js/[a-z]+\.js)\"#\1?v=$v\"#g" index.html 404.html blog/*.html
+          grep -ho 'style\.css?v=[0-9a-f]*\|[a-z]*\.js?v=[0-9a-f]*' index.html 404.html blog/*.html | sort | uniq -c
 
       - uses: actions/configure-pages@v6
 
