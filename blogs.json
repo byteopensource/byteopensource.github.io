@@ -1,9 +1,19 @@
 [
   {
+    "title": "Your First Pull Request Is Not the Goal",
+    "url": "blog/your-first-pull-request-is-not-the-goal.html",
+    "author": "The BYTE Club",
+    "date": "2026-10-13",
+    "minutes": 8,
+    "tag": "github",
+    "cover": "assets/blog/your-first-pull-request-is-not-the-goal.webp",
+    "summary": "Creating a pull request does not change main. What push, pull, and pull requests really mean, and the habits that help you learn on GitHub."
+  },
+  {
     "title": "Why Did Linus Torvalds Build Git, and Why Should You Care?",
     "url": "blog/why-did-linus-torvalds-build-git.html",
     "author": "The BYTE Club",
-    "date": "2026-10-14",
+    "date": "2026-10-12",
     "minutes": 9,
     "tag": "git",
     "cover": "assets/blog/why-did-linus-torvalds-build-git.webp",
@@ -23,7 +33,7 @@
     "title": "What Is Open Source, and Why Is Nobody Telling You?",
     "url": "blog/what-is-open-source.html",
     "author": "The BYTE Club",
-    "date": "2026-10-13",
+    "date": "2026-10-12",
     "minutes": 6,
     "tag": "basics",
     "cover": "assets/blog/what-is-open-source.webp",

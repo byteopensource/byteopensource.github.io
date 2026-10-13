@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Creating a pull request does not change main. What push, pull, and pull requests really mean, and the habits that help you learn on GitHub." />
+  <meta name="theme-color" content="#b8def2" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Your First Pull Request Is Not the Goal" />
+  <meta property="og:description" content="Creating a pull request does not change main. What push, pull, and pull requests really mean, and the habits that help you learn on GitHub." />
+  <meta property="og:url" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/blog/your-first-pull-request-is-not-the-goal.html" />
+  <meta property="og:image" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Your First Pull Request Is Not the Goal · BYTE Blog</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Knewave&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try { if (localStorage.getItem("byte-theme") === "byte") document.documentElement.dataset.theme = "byte"; } catch {}</script>
+</head>
+<body id="top">
+  <a class="skip" href="#post">Skip to the post</a>
+  <div class="read-progress" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+      <a class="btn btn--outline btn--sm" href="../index.html#blog"><span aria-hidden="true">←</span> All posts</a>
+    </div>
+  </header>
+
+  <main id="post">
+    <article class="article">
+      <header class="article__head">
+        <span class="post__tag">GitHub</span>
+        <h1 class="display article__title">Your First Pull Request Is Not the Goal</h1>
+        <p class="article__meta">The BYTE Club · <time datetime="2026-10-13">13 Oct 2026</time> · 8 min read</p>
+      </header>
+
+      <figure class="article__cover">
+        <img src="../assets/blog/your-first-pull-request-is-not-the-goal.webp" alt="" width="1200" height="675" />
+      </figure>
+
+      <p class="article__lede">Imagine you spent three evenings fixing a bug in an open source project. You pushed your code, opened a pull request, and felt proud. Then a week passed. Nobody replied, and you still do not know if your change is on main.</p>
+      <p>Many students feel this way on their first GitHub day. This blog explains what happened, and what to do next. The goal is not to get your change merged. The goal is to learn how a real project works, and the pull request is just the place where that learning happens.</p>
+
+      <h2>Quick recap: Git and GitHub are different</h2>
+      <p>In the <a href="why-did-linus-torvalds-build-git.html">Git blog</a>, we covered Git. It runs on your computer and tracks the history of your files. GitHub is a website that hosts Git projects. It adds a place to talk about the project, track tasks, and review changes. You can use Git without GitHub, but most open source projects use both.</p>
+
+      <h2>Push, pull, and pull request</h2>
+      <p>These three words cause the most confusion, so let’s define them.</p>
+      <ul>
+        <li><strong>Push</strong> sends your saved commits from your computer to a shared project on GitHub.</li>
+        <li><strong>Pull</strong> (<code>git pull</code>) brings changes from the shared project into your own copy.</li>
+        <li><strong>Pull request</strong> is a proposal. It asks the project’s maintainers to review your changes and pull them into main.</li>
+      </ul>
+      <p>The name is confusing because the word “pull” is used in two ways. Think of the pull request as a question: “Can you include this?” The answer comes after review.</p>
+      <p>This is the most important point in this blog: creating a pull request does not change main. Until a maintainer accepts it, your change is only waiting for a decision.</p>
+
+      <h2>Fork, then clone</h2>
+      <p>Two words here sound alike, but they are different.</p>
+      <ul>
+        <li><strong>Fork</strong> is a copy of a project in your GitHub account. You do it on the website, with the Fork button.</li>
+        <li><strong>Clone</strong> is a copy on your computer. You do it with <code>git clone</code> in the terminal.</li>
+      </ul>
+      <p>For a project you do not own, the usual flow is:</p>
+      <ol>
+        <li>Fork the project on GitHub.</li>
+        <li>Clone your fork to your computer.</li>
+        <li>Create a branch, make your change, and commit it.</li>
+        <li>Push the branch to your fork.</li>
+        <li>Open a pull request from your fork to the original project.</li>
+      </ol>
+      <p>You clone the original project only when you have permission to push to it directly. Most students will fork first.</p>
+      <figure class="article__figure">
+        <img src="../assets/blog/github-full-flow.webp" alt="Flow diagram: Fork, Clone, Branch and commit, Push, then Pull request, with Review under Push and Pull request" width="1200" height="400" loading="lazy" />
+      </figure>
+
+      <h2>Find an issue before you write code</h2>
+      <p>An issue is a task or problem written on a project’s page. Maintainers use issues to track bugs, feature ideas, and beginner tasks.</p>
+      <p>Here is how to pick one:</p>
+      <ul>
+        <li>Look for labels like “good first issue” or “help wanted.” Remember that a label is a hint, not a promise. Check that the issue is clear and that the project is still active.</li>
+        <li>Read the project’s contributing file, usually named <code>CONTRIBUTING.md</code>. It tells you how the team wants changes to look.</li>
+        <li>Comment on the issue before you start, like “I would like to work on this.” Many projects do not assign issues, so your comment tells others you are working on it.</li>
+      </ul>
+      <p>Do not start a large change without asking first. A short question on the issue can save you days of wasted work.</p>
+
+      <h2>Open your first pull request</h2>
+      <p>Once your branch is pushed, GitHub usually shows a button to create a pull request. When you open it, check three things:</p>
+      <ul>
+        <li><strong>Title:</strong> short and clear, like “fix login button crash on small screens.”</li>
+        <li><strong>Description:</strong> what changed, why it changed, and how someone can test it.</li>
+        <li><strong>Link to the issue:</strong> write “Fixes #123” in the description, where 123 is the issue number. This tells everyone which problem your change solves.</li>
+      </ul>
+      <p>If your work is not finished, open a draft pull request. A draft tells reviewers the work is in progress and invites early feedback.</p>
+
+      <h2>Reviews and updates</h2>
+      <p>After you open your pull request, a maintainer may read it and leave comments. They may ask for changes. This is normal, and it is the part where most learning happens.</p>
+      <p>To update your pull request, make the change on the same branch, commit it, and push. The pull request updates on its own. You do not need to open a new one. Opening a second pull request for the same change creates confusion for the maintainers.</p>
+      <p>If your pull request is closed without being merged, the commits are not deleted. They stay on your branch, and you can still look at them. Read the reviewer’s comments and ask a question if you do not understand them.</p>
+
+      <h2>Common mistakes</h2>
+      <p>These are the mistakes most beginners make in their first pull requests:</p>
+      <ul>
+        <li><strong>The mega pull request.</strong> You worked for a week and put everything into one change. Reviewers cannot read it quickly, so it waits. Split the work into smaller pull requests.</li>
+        <li><strong>The mystery pull request.</strong> The title is “fixes” and the description is empty. Reviewers have to guess what you changed.</li>
+        <li><strong>Waiting for main to change.</strong> You open a pull request and check main every hour. Nothing changes until it is reviewed and merged.</li>
+        <li><strong>Opening a second pull request.</strong> A reviewer asks for a change, so you open a new pull request instead of pushing to the first one.</li>
+      </ul>
+
+      <h2>Learn by doing</h2>
+      <p>You can practice these steps without any risk to a real project. <a href="https://skills.github.com/" target="_blank" rel="noopener">GitHub Skills</a> has free, interactive courses that run inside real GitHub repositories. The course gives you instructions and checks your work as you go. GitHub says taking a course is free in public repositories.</p>
+      <p>Start with the “Introduction to GitHub” course. It walks you through creating a repository, making a branch, and opening a pull request.</p>
+
+      <h2>Student Developer Pack</h2>
+      <p>GitHub also offers the Student Developer Pack. It gives verified students access to free tools and services from GitHub and its partners. Eligibility depends on your school and status, and the rules can change. Check your own eligibility at <a href="https://education.github.com/pack" target="_blank" rel="noopener">education.github.com/pack</a> before you apply. Do not assume you qualify, and do not assume a specific benefit is available unless the page says so.</p>
+
+      <h2>Habits to build</h2>
+      <p>After you learn the steps, these habits will help you more than any single command:</p>
+      <ul>
+        <li>Make small changes that do one thing.</li>
+        <li>Write a clear title and a short description for every pull request.</li>
+        <li>Link the issue you are fixing.</li>
+        <li>Read the contributing file before you start.</li>
+        <li>Ask on the issue before you begin a large change.</li>
+        <li>Reply to review comments within a few days, even if the reply is only a question.</li>
+        <li>Push updates to the same pull request instead of opening new ones.</li>
+      </ul>
+
+      <div class="article__task">
+        <span class="tape"></span>
+        <p class="article__task-label hand">your task for today</p>
+        <p>Open GitHub Skills and start the “Introduction to GitHub” course, or fork the First Contributions practice repository and follow its steps.</p>
+      </div>
+
+      <h2>Back to that week of waiting</h2>
+      <p>Remember the student who spent three evenings on a fix and then heard nothing for a week? By the end of this blog, you know what that silence means. The change is waiting for a decision, not rejected. Your pull request is one of the ways you learn how a real project thinks.</p>
+      <p>Your first pull request will probably not be the most important thing you do on GitHub. What stays with you is what you learned while making it: reading a project you did not write, writing a clear title, asking before you started, and staying with the feedback when it was not perfect.</p>
+      <p>If you finish this blog and nothing else, remember that the goal was never a merged change. The goal was to become someone who can work in a real project with other people.</p>
+
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://skills.github.com/" target="_blank" rel="noopener"><strong>GitHub Skills</strong></a>: free, interactive courses inside real repositories</li>
+        <li><a href="https://education.github.com/pack" target="_blank" rel="noopener"><strong>GitHub Education, Student Developer Pack</strong></a>: check your eligibility yourself</li>
+        <li><a href="https://github.com/firstcontributions/first-contributions" target="_blank" rel="noopener"><strong>First Contributions</strong></a>: a practice repository for a first pull request</li>
+        <li><a href="https://github.com/anav5704/CS000" target="_blank" rel="noopener"><strong>CS000</strong></a>: a free beginner course on collaborative Git and GitHub</li>
+        <li><a href="https://techearl.com/git-fork-vs-clone" target="_blank" rel="noopener"><strong>Fork vs clone guide</strong></a>: a short written explanation of the difference</li>
+      </ul>
+
+      <p class="article__signoff hand">Ready for a safe first PR? Start the journey on this site ✱</p>
+
+      <footer class="article__end">
+        <p>Want a safe place to make your first pull request?</p>
+        <a class="btn" href="../index.html#first-pr">Make your first PR <span aria-hidden="true">→</span></a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bar">
+      <div class="container footer__inner">
+        <a class="logo logo--light" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+        <ul class="socials" aria-label="The BYTE Club elsewhere">
+          <li><a href="https://www.instagram.com/thebyteclubnie/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" class="dot" /></svg></a></li>
+          <li><a href="https://www.linkedin.com/company/thebyteclubnie" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.8 2.8 0 0 1 5.6 0V17" /></svg></a></li>
+          <li><a href="mailto:thebyteclub@nie.ac.in" aria-label="Email thebyteclub@nie.ac.in" title="thebyteclub@nie.ac.in"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6.5 8.5-6.5" /></svg></a></li>
+          <li><a href="https://byteclubnie.vercel.app/" target="_blank" rel="noopener" aria-label="The BYTE Club website" title="Club website"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9M12 3C9.5 5.6 8.2 8.6 8.2 12s1.3 6.4 3.8 9" /></svg></a></li>
+        </ul>
+        <p class="footer__credit">Built by students of NIE, for students of NIE ♡<br />The BYTE Club · 2026</p>
+        <a class="footer__top" href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress bar along the top of the page.
+    const bar = document.querySelector(".read-progress");
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.scale = `${max > 0 ? Math.min(1, scrollY / max) : 1} 1`;
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+  </script>
+</body>
+</html>
