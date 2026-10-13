@@ -11,7 +11,7 @@
 
 const TOPICS = ["Setup", "Git", "My PR", "Levels", "Other"];
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
-const DEFAULT_ORIGINS = "https://thebyteclubnie.github.io";
+const DEFAULT_ORIGINS = "https://byteopensource.github.io,https://thebyteclubnie.github.io";
 
 // ponytail: per-instance memory, so the limit resets when Vercel starts a new instance.
 // Good enough to stop one person hammering the button; use Vercel KV/Upstash if real abuse shows up.

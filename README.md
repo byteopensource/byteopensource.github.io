@@ -7,10 +7,10 @@
 <p align="center">
   <b>Small commits, big journeys.</b><br />
   A beginner-friendly open source program by The BYTE Club, NIE.<br />
-  <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/">Website</a> ·
-  <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#first-pr">Make your first PR</a> ·
+  <a href="https://byteopensource.github.io/">Website</a> ·
+  <a href="https://byteopensource.github.io/#first-pr">Make your first PR</a> ·
   <a href="CONTRIBUTING.md">Contributing guide</a> ·
-  <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask">Ask a question</a>
+  <a href="https://byteopensource.github.io/#ask">Ask a question</a>
 </p>
 
 ---
@@ -34,9 +34,9 @@ put your name on it, then level up one pull request at a time until you're contr
 
 3. **Commit** it and open a **pull request**.
 4. A bot checks your file. If it's right, it merges it for you. If not, it tells you exactly what to fix.
-5. Your polaroid shows up on the [website](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#contributors) a few minutes later. 🎉
+5. Your polaroid shows up on the [website](https://byteopensource.github.io/#contributors) a few minutes later. 🎉
 
-Never used git? The [first PR guide](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#first-pr) fills in every command for you, and has a no-install browser route too.
+Never used git? The [first PR guide](https://byteopensource.github.io/#first-pr) fills in every command for you, and has a no-install browser route too.
 
 ## The six levels
 
@@ -78,7 +78,7 @@ Then open http://localhost:5500. (Opening `index.html` directly won't load the d
 ## Community
 
 - Be kind. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
-- Questions go to [Ask Us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask) on the website (publicly on GitHub, or privately by email), and no question is too basic.
+- Questions go to [Ask Us](https://byteopensource.github.io/#ask) on the website (publicly on GitHub, or privately by email), and no question is too basic.
 - Maintainers: see [MAINTAINERS.md](MAINTAINERS.md) for setup and review guidelines.
 - Follow the club: [Instagram](https://www.instagram.com/thebyteclubnie/) · [LinkedIn](https://www.linkedin.com/company/thebyteclubnie) · [Website](https://byteclubnie.vercel.app/) · [thebyteclub@nie.ac.in](mailto:thebyteclub@nie.ac.in)
 

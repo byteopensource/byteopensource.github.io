@@ -123,7 +123,7 @@ function onceVisible(el, fn) {
 onceVisible(route, () => route.classList.add("is-visible"));
 
 // First PR: personalise every command and the contributor file with the student's details.
-const REPO = "https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26";
+const REPO = "https://github.com/byteopensource/byteopensource.github.io";
 const USERNAME = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i; // GitHub's rules
 const form = document.querySelector(".details__form");
 const hint = document.querySelector(".field-hint");
@@ -153,7 +153,7 @@ function updateGuide() {
   shortcuts.hidden = !valid;
   if (valid) {
     const links = {
-      fork: `https://github.com/${u}/Open-Source_BYTE_2K26`,
+      fork: `https://github.com/${u}/byteopensource.github.io`,
       prs: `${REPO}/pulls?q=${encodeURIComponent(`is:pr author:${u}`)}`,
       issues: `${REPO}/issues?q=${encodeURIComponent(`is:issue is:open assignee:${u}`)}`,
     };

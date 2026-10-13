@@ -4,8 +4,8 @@
 // Needs the GitHub CLI logged in as a maintainer (gh auth login). Issues that already exist (same title) are skipped.
 import { execFileSync } from "node:child_process";
 
-const REPO = process.env.REPO || "TheBYTEClubNIE/Open-Source_BYTE_2K26";
-const SITE = "https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/";
+const REPO = process.env.REPO || "byteopensource/byteopensource.github.io";
+const SITE = "https://byteopensource.github.io/";
 
 function body({ what, where, done, hints }) {
   return [
