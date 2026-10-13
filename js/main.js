@@ -440,6 +440,14 @@ function renderPosts() {
         link.removeAttribute("target");
         card.querySelector(".post__read").textContent = "read it →";
       }
+      const cover = card.querySelector(".post__cover");
+      if (typeof p.cover === "string" && p.cover) {
+        cover.src = p.cover;
+        cover.alt = "";
+        cover.hidden = false;
+      } else {
+        cover.remove();
+      }
       card.querySelector(".post__tag").textContent = p.tag || "blog";
       card.querySelector(".post__title").textContent = p.title;
       card.querySelector(".post__summary").textContent = p.summary || "";

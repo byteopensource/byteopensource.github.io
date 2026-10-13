@@ -1156,11 +1156,22 @@ main { counter-reset: section; }
   box-shadow: 0 12px 30px rgb(22 33 62 / 0.14);
   rotate: -1deg;
   transition: rotate 0.25s, translate 0.25s, box-shadow 0.25s;
+  overflow: hidden;
 }
 .post:nth-child(even) .post__link { rotate: 1deg; }
 .post__link:hover,
 .post__link:focus-visible { rotate: 0deg; translate: 0 -5px; box-shadow: 0 18px 36px rgb(22 33 62 / 0.2); }
 .post__link:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+.post__cover {
+  display: block;
+  width: calc(100% + 48px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: -24px -24px 4px;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
 .post__tag {
   justify-self: start;
   padding: 2px 10px;
@@ -1197,18 +1208,85 @@ main { counter-reset: section; }
   margin-inline: auto;
   padding: clamp(32px, 6vw, 72px) var(--gutter) clamp(56px, 8vw, 96px);
 }
-.article__head { margin-bottom: 36px; }
+.article__head { margin-bottom: 28px; }
 .article__title { margin: 18px 0 16px; font-size: clamp(2.6rem, 6.5vw, 4.4rem); rotate: -2deg; }
 .article__meta { margin: 0; font-size: 0.85rem; opacity: 0.75; }
+.article__cover {
+  margin: 0 0 32px;
+}
+.article__cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgb(22 33 62 / 0.12);
+}
 .article p,
 .article li { font-size: 1.06rem; line-height: 1.75; }
 .article p { margin: 0 0 1.1em; }
 .article .article__lede { font-size: 1.22rem; line-height: 1.65; }
 .article h2 { margin: 2.2em 0 0.5em; font: 400 clamp(1.7rem, 3.6vw, 2.2rem)/1.1 var(--font-display); color: var(--red); }
 .article h3 { margin: 2em 0 0.4em; font-size: 1.2rem; }
-.article ul { margin: 0 0 1.2em; padding-left: 1.2em; }
+.article ul,
+.article ol { margin: 0 0 1.2em; padding-left: 1.2em; }
 .article li { margin-bottom: 0.5em; }
 .article li::marker { color: var(--red); }
+.article code {
+  font: 0.92em/1.4 ui-monospace, "Cascadia Code", "Segoe UI Mono", Menlo, Consolas, monospace;
+  padding: 0.12em 0.35em;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: 4px;
+}
+.article pre {
+  margin: 0 0 1.4em;
+  padding: 16px 18px;
+  overflow-x: auto;
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.article pre code {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+.article__figure {
+  margin: 1.4em 0 1.6em;
+}
+.article__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgb(22 33 62 / 0.12);
+}
+.article__table-wrap {
+  margin: 0 0 1.4em;
+  overflow-x: auto;
+}
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.article th,
+.article td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.article th {
+  font-weight: 700;
+  border-bottom-color: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+.article td code { white-space: nowrap; }
 
 .nudge {
   margin: 1.2em 0 2em;

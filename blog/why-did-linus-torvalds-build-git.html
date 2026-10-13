@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Git started when Linux needed a new tool overnight. What Git actually does, the mistakes students make, and the small habits that keep a team moving." />
+  <meta name="theme-color" content="#b8def2" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Why Did Linus Torvalds Build Git, and Why Should You Care?" />
+  <meta property="og:description" content="Git started when Linux needed a new tool overnight. What Git actually does, the mistakes students make, and the small habits that keep a team moving." />
+  <meta property="og:url" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/blog/why-did-linus-torvalds-build-git.html" />
+  <meta property="og:image" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Why Did Linus Torvalds Build Git, and Why Should You Care? · BYTE Blog</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Knewave&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try { if (localStorage.getItem("byte-theme") === "byte") document.documentElement.dataset.theme = "byte"; } catch {}</script>
+</head>
+<body>
+  <a class="skip" href="#post">Skip to the post</a>
+  <div class="read-progress" aria-hidden="true"></div>
+
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="logo" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+      <a class="btn btn--outline btn--sm" href="../index.html#blog"><span aria-hidden="true">←</span> All posts</a>
+    </div>
+  </header>
+
+  <main id="post">
+    <article class="article">
+      <header class="article__head">
+        <span class="post__tag">Git</span>
+        <h1 class="display article__title">Why Did Linus Torvalds Build Git, and Why Should You Care?</h1>
+        <p class="article__meta">The BYTE Club · <time datetime="2026-10-14">14 Oct 2026</time> · 9 min read</p>
+      </header>
+
+      <figure class="article__cover">
+        <img src="../assets/blog/why-did-linus-torvalds-build-git.webp" alt="" width="1200" height="675" />
+      </figure>
+
+      <p class="article__lede">You have probably saved a file as “final_v2_real_final.docx.” It works until you cannot remember which version has the bug fix. Many students do the same thing with code, and it gets messy fast.</p>
+      <p>The people who built Linux had the same problem, only much bigger.</p>
+
+      <h2>The story behind Git</h2>
+      <p>In 1991, Linus Torvalds, a student in Finland, started a small operating system kernel as a hobby. It grew into Linux. For years, developers sent their changes as patches, which are small sets of edits, through Usenet and mailing lists. Torvalds applied them to his own copy of the code by hand.</p>
+      <p>In 2002, the Linux kernel project began using BitKeeper, a commercial version control tool. In April 2005, the company behind BitKeeper revoked its free license for Linux development. The kernel community suddenly needed a new tool.</p>
+      <p>Torvalds wrote Git himself. The first commit was on April 7, 2005, and he wrote a version good enough for kernel work in about ten days. He wanted a tool that was fast, could handle huge projects, and was hard to corrupt.</p>
+      <p>Git was designed for thousands of people changing the same project. Many open source projects you use today are tracked with it.</p>
+
+      <h2>What Git actually does</h2>
+      <p>Git keeps snapshots of your project. Each snapshot is called a commit. A commit records what your files looked like at that moment, along with a message that explains why you saved it.</p>
+      <figure class="article__figure">
+        <img src="../assets/blog/git-snapshots.webp" alt="Git commits as snapshots: initial ideas become a refined plan over versions 1, 2, and 3" width="1200" height="675" loading="lazy" />
+      </figure>
+      <p>Git does not store a list of changes. It stores the full state of your files at each commit, and it works out the differences when you ask for them.</p>
+
+      <h2>Problem 1: Git only tracks what you add</h2>
+      <p>Many students think Git watches everything in a folder automatically. It does not. Git tracks only the files you tell it to track.</p>
+      <p>You need to add the files that belong to your project, and leave out the ones that do not, like:</p>
+      <ul>
+        <li><code>node_modules</code> folders, which hold downloaded packages and can be huge</li>
+        <li><code>.env</code> files, which often contain passwords or API keys</li>
+        <li>large videos or build outputs, which make your project slow to share</li>
+      </ul>
+      <p>GitHub also blocks single files over 100 MB in normal repositories, so a large video can cause an error when you share your work.</p>
+      <p>The fix is a <code>.gitignore</code> file. It lists the files and folders Git should never track. Create it at the start of your project, before your first commit.</p>
+      <p>Example: your friend commits a <code>.env</code> file with their database password. Now the password is in the project history, even after they delete the file. A <code>.gitignore</code> line like <code>.env</code> would have stopped that.</p>
+
+      <h2>Problem 2: Working straight on the main branch</h2>
+      <h3>What happens when everyone pushes to main</h3>
+      <p>A branch is a separate lane for your work. You can build something new in your lane without touching the main road, which is the version everyone uses.</p>
+      <p>Now imagine two students working on the same login page. Riya changes the login button to green and pushes it to main. Pushing means sending your saved changes to the shared project. Arjun changes the same button to blue, based on his own version of the page, and pushes it too.</p>
+      <p>Git now sees two different changes to the same line. It cannot tell which one is correct, so it stops and asks someone to decide. If nobody decides, the button breaks for every user, and the team has to stop and sort it out.</p>
+      <figure class="article__figure">
+        <img src="../assets/blog/git-branches.webp" alt="Git branches: main with feature branches merging back in" width="1200" height="675" loading="lazy" />
+      </figure>
+
+      <h3>How teams protect main</h3>
+      <p>Teams avoid this problem with one habit: nobody works directly on main. Everyone creates a branch for each piece of work.</p>
+      <p>Sara wants to try a new payment button. She does not touch main. She creates a branch called <code>feature-payment-button</code>, builds the change there, and tests it on her own laptop. Then she asks a teammate to check it. Only after the check passes does the change go into main. If the button had broken something, the main version would still be safe.</p>
+
+      <h3>Main, staging, and production</h3>
+      <p>Most teams use more than one version of the project. Think of it like a restaurant kitchen.</p>
+      <div class="article__table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Branch</th>
+              <th>Plain meaning</th>
+              <th>Restaurant example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Main</td>
+              <td>Reviewed code that is ready to test</td>
+              <td>The recipe that the head chef has approved</td>
+            </tr>
+            <tr>
+              <td>Staging (or testing)</td>
+              <td>A copy close to the real product, where the team tries the change</td>
+              <td>A tasting session before the dish goes on the menu</td>
+            </tr>
+            <tr>
+              <td>Production</td>
+              <td>The live version real users use</td>
+              <td>The dish served to customers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Changes move in one direction: from your branch to main, then to staging, then to production. Your college or company may use different names, like dev, test, or release. The idea stays the same: untested changes should not reach users.</p>
+
+      <h2>Problem 3: Git is for working together, not just backup</h2>
+      <p>Many people learn Git as a backup tool. That is only half of it. Git was built so that many people can change the same project, and their work can be combined later.</p>
+      <p>Imagine a group project without Git. Riya makes changes to the report and sends the whole file by email. Arjun also edits the file and sends his copy. Now there are three versions, and someone has to copy and paste changes by hand. Mistakes happen, and someone’s work gets lost.</p>
+      <p>With Git, each person has a full copy of the project and its history. Riya commits her change and shares it. Arjun pulls her change into his copy, then adds his own. Git keeps both histories, and when two people change the same line, it stops and asks someone to decide which version to keep.</p>
+      <p>This is how open source works. Thousands of people send changes to projects they do not own, and Git keeps the history clear enough for maintainers to review.</p>
+
+      <h2>Problem 4: Vague commit messages</h2>
+      <p>A commit message explains why you saved a change. Compare these messages:</p>
+      <ul>
+        <li><code>update</code></li>
+        <li><code>update home page</code></li>
+        <li><code>fix login button crash on small screens</code></li>
+      </ul>
+      <p>The first one tells you nothing. The second one is a little better, but it still does not say what changed on the home page. The third one tells you the problem and where it happened.</p>
+      <p>A good habit is to write the first line as a short sentence in the present tense, like “fix login button crash.” Keep it short, and add more detail below if needed.</p>
+      <p>Branch names can follow a similar pattern. A name like <code>fix/login-button-crash</code> tells your team what the branch is for before they even open it.</p>
+      <p>Look at your last commit message. Would a stranger understand it? If not, rewrite it with <code>git commit --amend</code>.</p>
+
+      <h2>Problem 5: Memorizing commands instead of understanding them</h2>
+      <p>Many beginners copy commands from a video. The command works once, and when something goes wrong, they have no idea what to do.</p>
+      <p>Understanding the model helps more than memorizing. Git has three places to know about:</p>
+      <ol>
+        <li><strong>Your working folder:</strong> the files you are editing right now.</li>
+        <li><strong>The staging area:</strong> the files you have chosen to save next.</li>
+        <li><strong>The history:</strong> the commits you have already saved.</li>
+      </ol>
+      <p><code>git status</code> tells you which place each file is in. Reading its output is one of the best ways to learn Git.</p>
+      <figure class="article__figure">
+        <img src="../assets/blog/git-three-places.webp" alt="Git's three places: working folder, staging area, and history" width="1200" height="675" loading="lazy" />
+      </figure>
+      <p>Here is a short cheat sheet for the commands in this blog:</p>
+      <div class="article__table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>What it does</th>
+              <th>When you use it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>git --version</code></td>
+              <td>Shows the installed Git version</td>
+              <td>To check Git is installed</td>
+            </tr>
+            <tr>
+              <td><code>git init</code></td>
+              <td>Starts tracking a folder</td>
+              <td>Once, at the start of a new project</td>
+            </tr>
+            <tr>
+              <td><code>git status</code></td>
+              <td>Shows which files are changed, staged, or untracked</td>
+              <td>Any time you are not sure what is going on</td>
+            </tr>
+            <tr>
+              <td><code>git add &lt;file&gt;</code></td>
+              <td>Moves a file into the staging area</td>
+              <td>Before a commit, to choose what to save</td>
+            </tr>
+            <tr>
+              <td><code>git commit -m "message"</code></td>
+              <td>Saves the staged files as a commit with a message</td>
+              <td>When a piece of work is ready to save</td>
+            </tr>
+            <tr>
+              <td><code>git commit --amend</code></td>
+              <td>Changes the last commit’s message or adds files to it</td>
+              <td>Right after a mistake in your last commit</td>
+            </tr>
+            <tr>
+              <td><code>git log</code></td>
+              <td>Lists saved commits, newest first</td>
+              <td>To see the history of your project</td>
+            </tr>
+            <tr>
+              <td><code>git branch</code></td>
+              <td>Lists branches and marks the current one</td>
+              <td>To check which branch you are on</td>
+            </tr>
+            <tr>
+              <td><code>git switch -c &lt;name&gt;</code></td>
+              <td>Creates a new branch and switches to it</td>
+              <td>Before starting a new piece of work</td>
+            </tr>
+            <tr>
+              <td><code>git switch &lt;name&gt;</code></td>
+              <td>Switches to an existing branch</td>
+              <td>To go back to another line of work</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Run this in a test folder, then change the file and run it again:</p>
+      <pre><code>git init                          # start tracking this folder
+git add notes.txt                 # choose which change to save
+git commit -m "add first notes"   # save a snapshot with a message
+git log                           # see your saved snapshots
+</code></pre>
+
+      <h2>Why this still matters</h2>
+      <p>Git was built because thousands of people needed to change the same code without losing track of who did what. That problem has not gone away. It just happens in a student club, a team project, or an open source repository.</p>
+      <p>The habits in this blog are small: add only what belongs, use a branch for each piece of work, write clear messages, and understand the three places Git uses. Each one protects the people around you, not only yourself.</p>
+
+      <div class="article__task">
+        <span class="tape"></span>
+        <p class="article__task-label hand">your task for today</p>
+        <p>Install Git if you do not have it, open a terminal, and run <code>git --version</code>. If you see a version number, create a test folder, add one file, and make one commit with a clear message.</p>
+      </div>
+      <p class="article__signoff hand">Next blog: GitHub. You will see how a branch becomes a proposed change that the project’s maintainers can review ✱</p>
+
+      <footer class="article__end">
+        <p>Want a safe place to make your first pull request?</p>
+        <a class="btn" href="../index.html#levels">Start the journey <span aria-hidden="true">→</span></a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bar">
+      <div class="container footer__inner">
+        <a class="logo logo--light" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+        <ul class="socials" aria-label="The BYTE Club elsewhere">
+          <li><a href="https://www.instagram.com/thebyteclubnie/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" class="dot" /></svg></a></li>
+          <li><a href="https://www.linkedin.com/company/thebyteclubnie" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.8 2.8 0 0 1 5.6 0V17" /></svg></a></li>
+          <li><a href="mailto:thebyteclub@nie.ac.in" aria-label="Email thebyteclub@nie.ac.in" title="thebyteclub@nie.ac.in"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6.5 8.5-6.5" /></svg></a></li>
+          <li><a href="https://byteclubnie.vercel.app/" target="_blank" rel="noopener" aria-label="The BYTE Club website" title="Club website"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9M12 3C9.5 5.6 8.2 8.6 8.2 12s1.3 6.4 3.8 9" /></svg></a></li>
+        </ul>
+        <p class="footer__credit">Built by students of NIE, for students of NIE ♡<br />The BYTE Club · 2026</p>
+        <a class="footer__top" href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress bar along the top of the page.
+    const bar = document.querySelector(".read-progress");
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.scale = `${max > 0 ? Math.min(1, scrollY / max) : 1} 1`;
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+  </script>
+</body>
+</html>
