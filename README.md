@@ -80,5 +80,6 @@ Then open http://localhost:5500. (Opening `index.html` directly won't load the d
 - Be kind. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
 - Questions go in [Discussions](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/discussions), and no question is too basic.
 - Maintainers: see [MAINTAINERS.md](MAINTAINERS.md) for setup and review guidelines.
+- Follow the club: [Instagram](https://www.instagram.com/thebyteclubnie/) · [LinkedIn](https://www.linkedin.com/company/thebyteclubnie) · [Website](https://byteclubnie.vercel.app/) · [thebyteclub@nie.ac.in](mailto:thebyteclub@nie.ac.in)
 
 Licensed under [MIT](LICENSE). Built by students of NIE, for students of NIE ♡

@@ -1561,11 +1561,28 @@ main { counter-reset: section; }
 .footer__top:hover { color: var(--yellow); }
 .footer__credit { margin: 0; font-size: 0.8rem; opacity: 0.7; }
 
+/* Club socials: round outlined buttons that fill yellow on hover */
+.socials { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid color-mix(in srgb, var(--on-dark) 35%, transparent);
+  border-radius: 50%;
+  color: var(--on-dark);
+  transition: background 0.2s, border-color 0.2s, color 0.2s, translate 0.2s;
+}
+.socials a:hover { background: var(--yellow); border-color: var(--yellow); color: var(--dark); translate: 0 -2px; }
+.socials a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.socials svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.socials .dot { fill: currentColor; stroke: none; }
+
 @media (max-width: 860px) {
   .faq__inner { grid-template-columns: minmax(0, 1fr); }
   .faq__side { position: static; }
   .ask { rotate: 0deg; margin-top: 36px; }
-  .footer__inner { flex-direction: column; align-items: flex-start; }
+  .footer__inner { flex-direction: column; align-items: flex-start; padding-bottom: 88px; } /* room for the floating dock */
 }
 
 @media (prefers-reduced-motion: no-preference) {

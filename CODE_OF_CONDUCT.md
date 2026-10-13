@@ -23,7 +23,7 @@ This applies to issues, pull requests, Discussions, code comments, and club chan
 
 ## If something happens
 
-Contact a maintainer listed in [MAINTAINERS.md](MAINTAINERS.md), or speak to any BYTE Club core team member in person.
+Contact a maintainer listed in [MAINTAINERS.md](MAINTAINERS.md), email the club at [thebyteclub@nie.ac.in](mailto:thebyteclub@nie.ac.in), or speak to any BYTE Club core team member in person.
 Reports are kept confidential. Maintainers may remove comments, close PRs, or block people from the project, depending on what happened.
 
 Based on the spirit of the [Contributor Covenant](https://www.contributor-covenant.org/).
