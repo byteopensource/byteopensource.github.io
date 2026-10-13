@@ -3,62 +3,200 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lost? · Open Source BYTE 2K26</title>
+  <!-- GitHub Pages serves this page at ANY broken address (even /a/b/c), so every link resolves from the site root. -->
+  <base href="/Open-Source_BYTE_2K26/" />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#b8def2" />
+  <title>Wrong turn · Open Source BYTE 2K26</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:wght@400;700&family=Knewave&display=swap" rel="stylesheet" />
-  <!-- Styles are inline: GitHub Pages serves this file at any broken path, where relative CSS links would break. -->
-  <style>
-    :root { --sky: #b8def2; --red: #e3341e; --yellow: #ffe03d; --ink: #16213e; }
-    body {
-      display: grid;
-      place-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 24px;
-      background: var(--sky);
-      color: var(--ink);
-      font-family: "DM Sans", system-ui, sans-serif;
-      text-align: center;
-    }
-    h1 { margin: 0; font: 400 clamp(5rem, 20vw, 11rem)/0.9 "Knewave", cursive; color: var(--red); rotate: -4deg; }
-    .term {
-      margin: 32px auto 24px;
-      padding: 16px 20px;
-      max-width: 440px;
-      border-radius: 12px;
-      background: var(--ink);
-      color: #fffdf7;
-      font: 500 0.9rem/1.7 ui-monospace, Consolas, monospace;
-      text-align: left;
-      rotate: 2deg;
-    }
-    .term b { color: var(--sky); }
-    .term .err { color: var(--yellow); }
-    p { margin: 0 0 24px; font: 700 1.6rem "Caveat", cursive; }
-    a {
-      display: inline-block;
-      justify-self: center;
-      padding: 13px 24px;
-      border-radius: 999px;
-      background: var(--yellow);
-      color: var(--ink);
-      font-weight: 700;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Knewave&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>try { if (localStorage.getItem("byte-theme") === "byte") document.documentElement.dataset.theme = "byte"; } catch {}</script>
 </head>
-<body>
-  <h1>404</h1>
-  <div class="term">
-    <div><b>$</b> git checkout this-page</div>
-    <div class="err">error: pathspec 'this-page' did not match any file(s) known to git</div>
-  </div>
-  <p>This page took a wrong turn. Happens to the best of us ♡</p>
-  <!-- Pages serves this at any depth, so link to the site root -->
-  <a href="/Open-Source_BYTE_2K26/">Back to the journey →</a>
+<body id="top">
+  <a class="skip" href="#lost">Skip to the page</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="./"><img class="logo__badge" src="assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+      <a class="btn btn--outline btn--sm" href="./"><span aria-hidden="true">←</span> Back home</a>
+    </div>
+  </header>
+
+  <main class="lost band" id="lost">
+    <div class="container lost__inner">
+
+      <div class="lost__text">
+        <p class="kicker lost__kicker">Wrong turn</p>
+        <h1 class="display section-title lost__title">404</h1>
+        <p class="lost__lede">This page took a wrong turn. Happens to the best of us ♡</p>
+
+        <div class="lost__term" aria-live="polite">
+          <div class="term__dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <pre><code class="lost__lines"></code></pre>
+        </div>
+
+        <p class="lost__guess hand" hidden>Did you mean <a></a>?</p>
+
+        <div class="lost__actions">
+          <a class="btn" href="./">Take me home <span aria-hidden="true">→</span></a>
+          <a class="btn btn--outline lost__report" href="https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues/new?template=bug.yml" target="_blank" rel="noopener">Report this broken link <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <p class="lost__or hand">or jump straight to</p>
+        <ul class="lost__links">
+          <li><a href="./#levels">The Journey</a></li>
+          <li><a href="./#first-pr">First PR</a></li>
+          <li><a href="./#cheatsheet">Git, Decoded</a></li>
+          <li><a href="./#contributors">Contributors</a></li>
+          <li><a href="./#blog">Blog</a></li>
+          <li><a href="./#faq">FAQ</a></li>
+          <li><a href="./#ask">Ask us</a></li>
+        </ul>
+      </div>
+
+      <!-- The Journey map, with the paper plane flown right off it. Clicking the plane flies home. -->
+      <button class="lost__fly" type="button" aria-label="Fly the paper plane back home">
+        <svg viewBox="0 0 600 520" aria-hidden="true">
+          <g class="lost__map" transform="rotate(-4 280 300)">
+            <rect x="40" y="150" width="440" height="330" rx="10" />
+            <path class="lost__grid" d="M40 205 H480 M40 260 H480 M40 315 H480 M40 370 H480 M40 425 H480 M113 150 V480 M186 150 V480 M259 150 V480 M332 150 V480 M405 150 V480" />
+            <path class="lost__fold" d="M187 150 V480 M333 150 V480" />
+            <path class="lost__route" d="M85 430 C 130 430, 135 360, 175 360 S 230 410, 265 405 S 300 300, 335 300 S 390 340, 410 330 S 430 240, 445 225" />
+            <g class="lost__stops">
+              <circle cx="85" cy="430" r="15" /><text x="85" y="436">0</text>
+              <circle cx="175" cy="360" r="15" /><text x="175" y="366">1</text>
+              <circle cx="265" cy="405" r="15" /><text x="265" y="411">2</text>
+              <circle cx="335" cy="300" r="15" /><text x="335" y="306">3</text>
+              <circle cx="410" cy="330" r="15" /><text x="410" y="336">4</text>
+              <circle cx="445" cy="225" r="15" /><text x="445" y="231">5</text>
+            </g>
+          </g>
+          <!-- the trail leaves the map -->
+          <path class="lost__trail" d="M450 205 C 470 150, 430 110, 470 80 S 530 60, 535 45" />
+          <g class="lost__plane">
+            <path d="M505 70 L585 38 L560 108 L540 82 Z M540 82 L585 38" />
+          </g>
+          <g class="lost__sticker" transform="rotate(-8 140 70)">
+            <rect x="60" y="40" width="190" height="56" rx="6" />
+            <text x="155" y="78">you are here</text>
+          </g>
+          <path class="lost__arrow" d="M255 60 C 330 20, 420 30, 495 58" />
+          <path class="lost__arrowhead" d="M478 44 L497 59 L474 66" />
+        </svg>
+        <span class="lost__fly-hint hand">click the plane to fly home</span>
+      </button>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bar">
+      <div class="container footer__inner">
+        <a class="logo logo--light" href="./"><img class="logo__badge" src="assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+        <ul class="socials" aria-label="The BYTE Club elsewhere">
+          <li><a href="https://www.instagram.com/thebyteclubnie/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" class="dot" /></svg></a></li>
+          <li><a href="https://www.linkedin.com/company/thebyteclubnie" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.8 2.8 0 0 1 5.6 0V17" /></svg></a></li>
+          <li><a href="mailto:thebyteclub@nie.ac.in" aria-label="Email thebyteclub@nie.ac.in" title="thebyteclub@nie.ac.in"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6.5 8.5-6.5" /></svg></a></li>
+          <li><a href="https://byteclubnie.vercel.app/" target="_blank" rel="noopener" aria-label="The BYTE Club website" title="Club website"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9M12 3C9.5 5.6 8.2 8.6 8.2 12s1.3 6.4 3.8 9" /></svg></a></li>
+        </ul>
+        <p class="footer__credit">Built by students of NIE, for students of NIE ♡<br />The BYTE Club · 2026</p>
+        <a class="footer__top" href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // The address they tried, without the site's base path. Only ever written with textContent.
+    const ROOT = "/Open-Source_BYTE_2K26/";
+    const REPO = "https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26";
+    const raw = location.pathname.startsWith(ROOT) ? location.pathname.slice(ROOT.length) : location.pathname.slice(1);
+    let tried = raw;
+    try { tried = decodeURIComponent(raw); } catch {}
+    tried = tried.slice(0, 80) || "this-page";
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // ---------- Terminal: type out the "error" ----------
+    const out = document.querySelector(".lost__lines");
+    const lines = [
+      ["cmd", `git checkout ${tried}`],
+      ["err", `error: pathspec '${tried}' did not match any file(s) known to git`],
+      ["cmd", "git switch main   # let's get you back"],
+    ];
+    (async () => {
+      for (const [kind, text] of lines) {
+        const line = document.createElement("span");
+        line.className = `lost__line lost__line--${kind}`;
+        out.append(line);
+        if (calm) { line.textContent = text; continue; }
+        for (let i = 1; i <= text.length; i++) {
+          line.textContent = text.slice(0, i);
+          await new Promise((r) => setTimeout(r, kind === "err" ? 8 : 28));
+        }
+        await new Promise((r) => setTimeout(r, 250));
+      }
+    })();
+
+    // ---------- "Did you mean…?": closest page or section to what they typed ----------
+    const words = (s) => s.toLowerCase().replace(/\.html?$/, "").replace(/[^a-z0-9]+/g, " ").trim();
+    const pairs = (s) => { const t = s.replace(/ /g, ""); const p = []; for (let i = 0; i < t.length - 1; i++) p.push(t.slice(i, i + 2)); return p; };
+    function similarity(a, b) { // Dice coefficient on letter pairs: forgiving of typos and half-typed words
+      const pa = pairs(a), pb = pairs(b);
+      if (!pa.length || !pb.length) return 0;
+      let hits = 0;
+      const pool = [...pb];
+      for (const x of pa) { const i = pool.indexOf(x); if (i >= 0) { hits++; pool.splice(i, 1); } }
+      return (2 * hits) / (pa.length + pb.length);
+    }
+    const candidates = [
+      ["The Journey", "./#levels", "journey levels"],
+      ["First PR guide", "./#first-pr", "first pr pull request guide"],
+      ["Git, Decoded", "./#cheatsheet", "cheatsheet git decoded commands"],
+      ["Contributors", "./#contributors", "contributors wall people"],
+      ["Beyond BYTE", "./#beyond", "beyond programs gsoc"],
+      ["The blog", "./#blog", "blog posts"],
+      ["FAQ", "./#faq", "faq help stuck"],
+      ["Ask us", "./#ask", "ask question contact"],
+    ];
+    fetch("blogs.json")
+      .then((r) => r.json())
+      .then((posts) => posts.forEach((p) => { if (/^blog\/[\w-]+\.html$/.test(p.url || "")) candidates.push([p.title, p.url, words(p.url.replace(/^blog\//, "")), words(p.title)]); }))
+      .catch(() => {})
+      .finally(() => {
+        const want = words(tried);
+        const wantPage = want.replace(/^blog /, ""); // "blog/how-to-read" is compared as "how to read"
+        let best = null, score = 0;
+        for (const [label, href, ...keys] of candidates) {
+          // Compare with each name separately (address, title...): one long string would dilute a good match.
+          // Single words too, so a one-word typo like "joruney" still finds "journey".
+          const names = keys.flatMap((k) => [k, ...k.split(" ").filter((w) => w.length >= 3)]);
+          const s = Math.max(...names.map((k) => Math.max(similarity(want, k), similarity(wantPage, k))));
+          if (s > score) { score = s; best = [label, href]; }
+        }
+        if (best && score >= 0.35) {
+          const guess = document.querySelector(".lost__guess");
+          const a = guess.querySelector("a");
+          a.textContent = best[0];
+          a.href = best[1];
+          guess.hidden = false;
+        }
+      });
+
+    // ---------- "Report this broken link": a pre-filled bug report ----------
+    const from = document.referrer ? `I followed a link from ${document.referrer}` : "I typed the address or opened a bookmark.";
+    document.querySelector(".lost__report").href =
+      `${REPO}/issues/new?template=bug.yml&title=${encodeURIComponent(`Broken link: /${tried}`)}` +
+      `&where=${encodeURIComponent(`/${tried}`)}&what=${encodeURIComponent(`This address shows the 404 page. ${from}`)}`;
+
+    // ---------- The plane flies back onto the map, then home ----------
+    document.querySelector(".lost__fly").addEventListener("click", (e) => {
+      const btn = e.currentTarget;
+      if (calm) { location.href = "./"; return; }
+      btn.classList.add("is-flying");
+      setTimeout(() => (location.href = "./"), 900);
+    });
+  </script>
 </body>
 </html>

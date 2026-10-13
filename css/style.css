@@ -48,7 +48,7 @@
   background-attachment: fixed;
 }
 /* Paper surfaces stay light at night, so inside them ink goes dark and the accent goes logo-blue. */
-:root[data-theme="byte"] :is(.details, .level-card, .polaroid, .map, .pr, .sticky, .person__card, .ask, .toast, .dock__btn, .btn:not(.btn--outline), .nav.is-open, .wall-search, .board, .cheat, .person__grad, .skip, .post__link, .article__task, .nudge, .word, .program) {
+:root[data-theme="byte"] :is(.details, .level-card, .polaroid, .map, .pr, .sticky, .person__card, .ask, .toast, .dock__btn, .btn:not(.btn--outline), .nav.is-open, .wall-search, .board, .cheat, .person__grad, .skip, .post__link, .article__task, .nudge, .word, .program, .lost__map) {
   --ink: #0f1d2b;
   --red: #2747c9;
 }
@@ -120,6 +120,20 @@ section { padding-block: clamp(64px, 10vw, 120px); }
 
 /* ---------- Header ---------- */
 html { scroll-padding-top: var(--header-h); } /* anchor jumps land below the sticky header */
+
+/* Custom scrollbar: a slim red thumb on the sky (mint on navy in BYTE mode, via the same variables).
+   scrollbar-color covers Chrome, Edge and Firefox; the ::-webkit rules cover Safari. */
+html { scrollbar-color: var(--red) var(--sky); scrollbar-width: thin; }
+.code pre,
+.term__out { scrollbar-color: var(--prompt) transparent; } /* inside dark boxes */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--sky); }
+::-webkit-scrollbar-thumb { border: 3px solid var(--sky); border-radius: 99px; background: var(--red); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+.code pre::-webkit-scrollbar-track,
+.term__out::-webkit-scrollbar-track { background: transparent; }
+.code pre::-webkit-scrollbar-thumb,
+.term__out::-webkit-scrollbar-thumb { border-color: var(--dark); background: var(--prompt); }
 
 .header {
   position: sticky;
@@ -1490,6 +1504,86 @@ main { counter-reset: section; }
 .team__list small { font-size: 0.78rem; opacity: 0.75; }
 .team__list a:hover b { color: var(--red); }
 @media (max-width: 860px) { .team { margin-left: 0; } }
+
+/* ---------- 404 page ---------- */
+.lost { display: grid; align-items: center; min-height: calc(100vh - var(--header-h)); padding-block: clamp(40px, 7vw, 90px); }
+.lost__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+.lost__kicker { margin-bottom: 6px; }
+.lost__kicker::before { content: "✱"; counter-increment: none; } /* no section number on an error page */
+.lost .lost__title { margin: 4px 0 22px; font-size: clamp(6rem, 18vw, 12rem); line-height: 0.85; transform: rotate(-4deg); }
+.lost__lede { max-width: 34ch; margin: 0 0 22px; font-size: 1.15rem; }
+
+.lost__term {
+  max-width: 560px;
+  padding: 14px 18px 16px;
+  border-radius: 12px;
+  background: var(--dark);
+  color: var(--on-dark);
+  box-shadow: 0 16px 34px rgb(22 33 62 / 0.2);
+  rotate: 1deg;
+}
+.lost__term .term__dots { margin-bottom: 10px; }
+.lost__term pre {
+  min-height: 5.6em; /* room for all three lines, so the page doesn't jump while they type */
+  margin: 0;
+  font: 500 0.88rem/1.7 ui-monospace, "Cascadia Code", Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lost__line { display: block; }
+.lost__line--cmd::before { content: "$ "; color: var(--prompt); }
+.lost__line--err { color: var(--yellow); }
+:root[data-theme="byte"] .lost__line--err { color: var(--red); }
+
+.lost__guess { margin: 18px 0 0; font-size: 1.6rem; }
+.lost__guess a { color: var(--red); font-weight: 700; }
+.lost__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.lost__or { margin: 26px 0 8px; font-size: 1.3rem; opacity: 0.8; }
+.lost__links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.lost__links a {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.lost__links a:hover { background: var(--ink); color: var(--sky); }
+
+/* The map illustration is a button: clicking the plane flies it home */
+.lost__fly { display: grid; justify-items: center; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.lost__fly svg { width: 100%; max-width: 560px; overflow: visible; }
+.lost__fly:focus-visible { outline: 3px solid var(--red); outline-offset: 6px; border-radius: 12px; }
+.lost__fly-hint { font-size: 1.3rem; opacity: 0.75; }
+.lost__map rect { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+.lost__grid { fill: none; stroke: color-mix(in srgb, var(--sky) 75%, transparent); stroke-width: 1.5; }
+.lost__fold { stroke: rgb(0 0 0 / 0.06); stroke-width: 8; }
+.lost__route { fill: none; stroke: var(--red); stroke-width: 4; stroke-dasharray: 10 10; stroke-linecap: round; }
+.lost__stops circle { fill: var(--yellow); stroke: var(--ink); stroke-width: 2.5; }
+.lost__stops text { font: 700 14px var(--font-body); fill: var(--ink); text-anchor: middle; }
+.lost__trail { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 6 8; stroke-linecap: round; opacity: 0.7; }
+.lost__plane path { fill: var(--paper); stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+.lost__plane { transform-box: fill-box; transform-origin: center; animation: plane-hover 3s ease-in-out infinite; }
+.lost__fly:hover .lost__plane { scale: 1.1; }
+.lost__fly.is-flying .lost__plane { animation: plane-home 0.9s cubic-bezier(0.5, 0, 0.75, 0) forwards; }
+@keyframes plane-hover { 50% { translate: 0 -8px; rotate: -5deg; } }
+@keyframes plane-home { to { translate: -440px 350px; rotate: -150deg; scale: 0.4; opacity: 0.2; } }
+.lost__sticker rect { fill: var(--red); }
+.lost__sticker text { font: 700 30px var(--font-hand); fill: var(--paper); text-anchor: middle; }
+:root[data-theme="byte"] .lost__sticker text { fill: #0f1d2b; }
+.lost__arrow,
+.lost__arrowhead { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 860px) {
+  .lost__inner { grid-template-columns: minmax(0, 1fr); }
+  .lost .lost__title { font-size: clamp(5.5rem, 30vw, 8rem); }
+}
 
 /* ---------- FAQ ---------- */
 .faq__inner {
