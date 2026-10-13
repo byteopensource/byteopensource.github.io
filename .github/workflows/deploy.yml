@@ -41,6 +41,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LEADERBOARD_EXCLUDE: "CALL-ME-TATA,riteshkrkarn" # maintainers stay off the leaderboard
 
+      # Browsers cache CSS/JS for 10 minutes. Stamping the links with this commit's ID means a new
+      # deploy always loads the new files, instead of new HTML styled by an old stylesheet.
+      - name: Stamp CSS and JS links with the commit
+        run: |
+          v="${GITHUB_SHA::7}"
+          sed -i -E "s#(css/style\.css|js/main\.js)\"#\1?v=$v\"#g" index.html blog/*.html
+          grep -ho 'style\.css?v=[0-9a-f]*\|main\.js?v=[0-9a-f]*' index.html blog/*.html | sort | uniq -c
+
       - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5
