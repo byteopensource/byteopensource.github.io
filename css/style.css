@@ -892,6 +892,7 @@ main { counter-reset: section; }
 .steps p code { font-size: 0.85em; padding: 1px 6px; border-radius: 4px; background: var(--paper); }
 
 .steps__after { margin: 8px 0 0 72px; font-size: 1.5rem; }
+.steps .new-file-hint { margin: 10px 0 0; font-size: 1.25rem; color: var(--red); }
 .steps__after a { color: var(--red); }
 
 @media (max-width: 860px) {

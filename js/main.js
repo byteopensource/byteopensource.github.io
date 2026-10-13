@@ -167,8 +167,16 @@ function updateGuide() {
     note: f.note.trim() || "One line about you.",
   }, null, 2);
   document.querySelector(".json-preview").textContent = json;
-  document.querySelector(".new-file-link").href =
-    `${REPO}/new/main/contributors?filename=${encodeURIComponent(u + ".json")}&value=${encodeURIComponent(json + "\n")}`;
+  // Browser route: only send people to GitHub once we know their username, or the bot will reject the file.
+  const fileLink = document.querySelector(".new-file-link");
+  document.querySelector(".new-file-hint").hidden = valid;
+  if (valid) {
+    fileLink.href = `${REPO}/new/main/contributors?filename=${encodeURIComponent(u + ".json")}&value=${encodeURIComponent(json + "\n")}`;
+    fileLink.target = "_blank";
+  } else {
+    fileLink.href = "#first-pr"; // scrolls up to the details card instead
+    fileLink.removeAttribute("target");
+  }
 
   try { localStorage.setItem(DETAILS_KEY, JSON.stringify(f)); } catch {}
 }
