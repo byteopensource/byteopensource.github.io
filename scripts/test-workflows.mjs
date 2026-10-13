@@ -37,7 +37,7 @@ async function run(code, { context, github, env = {} }) {
 }
 
 // ---------- fake GitHub ----------
-function fakeGitHub({ files = [], content = {}, issues = {}, comments = [], mergeFails = false, myIssues = [], timelines = {}, openAssigned = [] }) {
+function fakeGitHub({ files = [], content = {}, onBase = [], issues = {}, comments = [], mergeFails = false, myIssues = [], timelines = {}, openAssigned = [] }) {
   const calls = [];
   const rec = (name) => async (args) => { calls.push({ name, args }); return { data: {} }; };
   const github = {
@@ -60,7 +60,12 @@ function fakeGitHub({ files = [], content = {}, issues = {}, comments = [], merg
         merge: async (args) => { calls.push({ name: "merge", args }); if (mergeFails) throw new Error("protected"); return { data: {} }; },
       },
       repos: {
-        getContent: async ({ path }) => {
+        getContent: async ({ path, ref }) => {
+          if (ref === "main") {
+            // what's already on the club's main branch
+            if (!onBase.includes(path)) throw new Error("404");
+            return { data: {} };
+          }
           const text = content[path];
           return { data: { size: Buffer.byteLength(text), content: Buffer.from(text).toString("base64") } };
         },
@@ -141,6 +146,19 @@ await test("touching other files alongside is refused", async () => {
 
 await test("editing an existing contributor file goes to a human", async () => {
   const gh = fakeGitHub({ files: [{ filename: "contributors/riya-s.json", status: "modified" }] });
+  const log = await run(prScript, { context: prContext("riya-s"), github: gh });
+  assert.equal(log.failed, null);
+  assert.ok(!names(gh).includes("merge"));
+  assert.equal(gh.calls[0].args.labels[0], "needs-review");
+});
+
+await test("a second 'new' file from a fork that's behind main still goes to a human", async () => {
+  // Real case: PR #33 re-added a file that PR #32 had merged a minute earlier.
+  const gh = fakeGitHub({
+    files: [{ filename: "contributors/riya-s.json", status: "added" }],
+    content: { "contributors/riya-s.json": JSON.stringify({ name: "Riya", github: "riya-s" }) },
+    onBase: ["contributors/riya-s.json"],
+  });
   const log = await run(prScript, { context: prContext("riya-s"), github: gh });
   assert.equal(log.failed, null);
   assert.ok(!names(gh).includes("merge"));
