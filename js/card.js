@@ -30,6 +30,7 @@
   let size = "post";
   let avatar = null;
   let avatarFor = null;
+  let photoMatrix = null;
   let upload = null; // a photo picked on this device, already cropped square
   const logo = new Image();
   logo.src = "assets/byte-logo.webp";
@@ -188,6 +189,7 @@
     ctx.save();
     ctx.translate(0, y + 430);
     ctx.rotate(0.035);
+    photoMatrix = ctx.getTransform(); // so a pointer on the canvas can be mapped into the photo window
     ctx.shadowColor = "rgba(0,0,0,.18)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(-200, -210, 400, 440);
@@ -335,14 +337,33 @@
   const zoom = form.elements.cardZoom;
   let source = null; // the decoded photo, kept so zooming can re-crop it
   let sourceUrl = null;
+  let pan = { x: 0, y: 0 }; // how far the crop has been dragged from the middle, in photo pixels
+  let dragging = null;
 
-  // Square from the middle, 1/zoom of the short side, scaled to 2x the polaroid window (sharp, fast to redraw).
+  const cropSide = () => Math.min(source.naturalWidth, source.naturalHeight) / Number(zoom.value);
+
+  // A square, 1/zoom of the short side, moved by pan but never past the photo's edges,
+  // scaled to 2x the polaroid window (sharp, fast to redraw).
   function cropPhoto() {
-    const side = Math.min(source.naturalWidth, source.naturalHeight) / Number(zoom.value);
+    const { naturalWidth: w, naturalHeight: h } = source;
+    const side = cropSide();
+    const clamp = (v, room) => Math.max(-room, Math.min(room, v));
+    pan = { x: clamp(pan.x, (w - side) / 2), y: clamp(pan.y, (h - side) / 2) };
     const out = document.createElement("canvas");
     out.width = out.height = 704;
-    out.getContext("2d").drawImage(source, (source.naturalWidth - side) / 2, (source.naturalHeight - side) / 2, side, side, 0, 0, 704, 704);
+    out.getContext("2d").drawImage(source, (w - side) / 2 + pan.x, (h - side) / 2 + pan.y, side, side, 0, 0, 704, 704);
     upload = out;
+  }
+
+  // Is this pointer (or touch) over the photo window? Undo the card's transform to find out.
+  function overPhoto(e) {
+    if (!upload || !photoMatrix) return false;
+    const r = canvas.getBoundingClientRect();
+    const p = photoMatrix.inverse().transformPoint(new DOMPoint(
+      (e.clientX - r.left) * canvas.width / r.width,
+      (e.clientY - r.top) * canvas.height / r.height,
+    ));
+    return Math.abs(p.x) <= 176 && p.y >= -186 && p.y <= 166;
   }
 
   function dropPhoto() {
@@ -359,16 +380,17 @@
     photoInput.value = ""; // picking the same file again still works
     try {
       const img = new Image();
-      img.src = url;
-      await img.decode(); // browsers apply the phone's rotation (EXIF) here
+      // onload, not img.decode(): decode() can hang in a background tab. Browsers apply the phone's rotation (EXIF) here.
+      await new Promise((loaded, failed) => { img.onload = loaded; img.onerror = failed; img.src = url; });
       dropPhoto();
       source = img;
       sourceUrl = url;
       zoom.value = 1;
+      pan = { x: 0, y: 0 };
       cropPhoto();
       removePhoto.hidden = zoomBox.hidden = false;
       draw();
-      say("Photo added ✓ Use Zoom to get your face in the frame.");
+      say("Photo added ✓ Drag it on the card to move it, and use Zoom to get closer.");
     } catch {
       URL.revokeObjectURL(url);
       say("Couldn't read that photo. Try another one.");
@@ -379,6 +401,31 @@
   photoInput.addEventListener("change", () => usePhoto(photoInput.files[0]));
   zoom.addEventListener("input", () => source && cropPhoto()); // the form's input handler redraws right after
   removePhoto.addEventListener("click", () => { dropPhoto(); draw(); });
+  // ---------- drag the photo inside its frame ----------
+  canvas.addEventListener("pointerdown", (e) => {
+    if (!overPhoto(e)) return;
+    dragging = { x: e.clientX, y: e.clientY };
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add("is-dragging");
+    tiltBox.style.setProperty("--rx", "0deg"); // a flat card keeps the pointer maths exact
+    tiltBox.style.setProperty("--ry", "0deg");
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!dragging) return void canvas.classList.toggle("can-drag", overPhoto(e));
+    // CSS px -> canvas px -> photo px. Dragging right shows more of the left, so the crop moves the other way.
+    const k = (canvas.width / canvas.getBoundingClientRect().width) * (cropSide() / 352);
+    pan.x -= (e.clientX - dragging.x) * k;
+    pan.y -= (e.clientY - dragging.y) * k;
+    dragging = { x: e.clientX, y: e.clientY };
+    cropPhoto();
+    draw();
+  });
+  const stopDrag = () => { dragging = null; canvas.classList.remove("is-dragging"); };
+  canvas.addEventListener("pointerup", stopDrag);
+  canvas.addEventListener("pointercancel", stopDrag);
+  // On phones a finger on the photo moves the photo; anywhere else on the card still scrolls the page.
+  canvas.addEventListener("touchstart", (e) => { if (overPhoto(e.touches[0])) e.preventDefault(); }, { passive: false });
+
   tiltBox.addEventListener("dragover", (e) => { e.preventDefault(); tiltBox.classList.add("is-dropping"); });
   tiltBox.addEventListener("dragleave", () => tiltBox.classList.remove("is-dropping"));
   tiltBox.addEventListener("drop", (e) => {
@@ -459,6 +506,7 @@
   // ---------- the preview tilts towards the mouse ----------
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     tiltBox.addEventListener("pointermove", (e) => {
+      if (dragging) return;
       const r = tiltBox.getBoundingClientRect();
       tiltBox.style.setProperty("--ry", `${((e.clientX - r.left) / r.width - 0.5) * 14}deg`);
       tiltBox.style.setProperty("--rx", `${((e.clientY - r.top) / r.height - 0.5) * -14}deg`);
