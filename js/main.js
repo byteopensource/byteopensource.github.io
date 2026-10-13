@@ -295,11 +295,16 @@ fetch("contributors.json")
   })
   .catch(() => {}); // wall just shows "your spot" if the file can't load
 
-// Ask us: turns the form into a prefilled GitHub Discussion, so no backend is needed.
+// Ask us: by default the form opens a prefilled GitHub Discussion (no backend needed).
+// If data-email-endpoint is set on the form, students can also send it privately by email
+// through the Vercel function in ask-api/ (which keeps the Resend key secret).
 const askForm = document.querySelector(".ask-form");
 const askSearch = document.querySelector(".ask-form__search");
 const askSent = document.querySelector(".ask-form__sent");
+const askEndpoint = askForm.dataset.emailEndpoint;
+const askModeBtns = [...askForm.querySelectorAll(".ask-form__mode button")];
 const ASK_KEY = "byte-ask-draft";
+let askMode = "github";
 
 try {
   const draft = JSON.parse(localStorage.getItem(ASK_KEY)) || {};
@@ -311,20 +316,75 @@ function updateAsk() {
   askSearch.hidden = title.length < 3;
   askSearch.querySelector("a").href = `${REPO}/discussions?discussions_q=${encodeURIComponent(title)}`;
   askSent.hidden = true;
-  try { localStorage.setItem(ASK_KEY, JSON.stringify(Object.fromEntries(new FormData(askForm)))); } catch {}
+  const { website, ...draft } = Object.fromEntries(new FormData(askForm)); // never save the spam trap
+  try { localStorage.setItem(ASK_KEY, JSON.stringify(draft)); } catch {}
+}
+
+function setAskMode(mode) {
+  askMode = mode;
+  const email = mode === "email";
+  askModeBtns.forEach((b) => b.setAttribute("aria-pressed", b.dataset.mode === mode));
+  askForm.querySelector(".ask-form__email-only").hidden = !email;
+  askForm.elements.askEmail.required = email;
+  askForm.querySelector(".ask-form__label").textContent = email ? "Send my question" : "Post my question";
+  askForm.querySelector(".ask-form__arrow").textContent = email ? "→" : "↗";
+  askForm.querySelector(".ask-form__hint").textContent = email ? "goes straight to the club's inbox" : "opens GitHub in a new tab";
+  askSent.hidden = true;
+}
+
+if (askEndpoint) {
+  askForm.querySelector(".ask-form__mode").hidden = false;
+  askModeBtns.forEach((b) => b.addEventListener("click", () => setAskMode(b.dataset.mode)));
 }
 
 askForm.addEventListener("input", updateAsk);
 updateAsk();
 
-askForm.addEventListener("submit", (e) => {
+function journeyWhere() {
+  const next = stops.findIndex((_, i) => !done.includes(i)); // from the journey above
+  return !done.length ? "Just getting started" : next === -1 ? "Finished all six levels" : `Working on Level ${next}`;
+}
+
+function showAskResult(html) {
+  askSent.innerHTML = html; // only our own fixed strings, never user input
+  askSent.hidden = false;
+}
+
+askForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = Object.fromEntries(new FormData(askForm));
-  const next = stops.findIndex((_, i) => !done.includes(i)); // from the journey above
-  const where = !done.length ? "Just getting started" : next === -1 ? "Finished all six levels" : `Working on Level ${next}`;
+
+  if (askMode === "email") {
+    const btn = askForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    try {
+      const res = await fetch(askEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topic: f.topic, title: f.title, details: f.body, level: journeyWhere(),
+          name: f.askName, email: f.askEmail, website: f.website,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      showAskResult("Sent ✓ We'll reply to your email within 48 hours.");
+      askForm.elements.title.value = "";
+      askForm.elements.body.value = "";
+      try { localStorage.removeItem(ASK_KEY); } catch {}
+    } catch (err) {
+      const msg = err instanceof TypeError ? "Couldn't reach the club's inbox. Check your internet." : err.message;
+      askSent.textContent = `${msg} You can also use the GitHub option.`; // plain text only
+      askSent.hidden = false;
+    } finally {
+      btn.disabled = false;
+    }
+    return;
+  }
+
   const body = [
     `**Topic:** ${f.topic}`,
-    `**Where I am:** ${where}`,
+    `**Where I am:** ${journeyWhere()}`,
     "",
     f.body.trim() || "_No details given._",
     "",
@@ -336,7 +396,7 @@ askForm.addEventListener("submit", (e) => {
     "_blank",
     "noopener"
   );
-  askSent.hidden = false;
+  showAskResult("GitHub is open in a new tab. Click <strong>Start discussion</strong> there to post it ✓");
 });
 
 // ---------- Live data: open issues per level + leaderboard ----------

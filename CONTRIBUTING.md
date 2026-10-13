@@ -130,6 +130,7 @@ node scripts/test-workflows.mjs
 | `blog/*.html` + `blogs.json` | Blog posts and the list that feeds the blog section |
 | `contributors/` | One JSON file per student |
 | `scripts/build-data.mjs` | Builds `contributors.json` and `stats.json` for the site |
+| `ask-api/` | The Vercel function behind *Ask Us → By email* (deployed separately, see its README) |
 | `.github/workflows/` | `deploy.yml` (publishes the site), `pull-requests.yml` (Level 1 bot + level labels), `claims.yml` (`/assign`), `checks.yml` (tests) |
 
 ## Code style

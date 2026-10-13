@@ -29,6 +29,7 @@ Do these in order, on GitHub, as a repo admin.
 6. **Keep yourselves off the leaderboard.** In `.github/workflows/deploy.yml`, set `LEADERBOARD_EXCLUDE` to your logins, e.g. `"alice,bob"`.
 7. **Make it findable.** Settings → General → *Social preview*: upload `assets/og.png`. Add topics: `open-source`, `beginner-friendly`, `first-timers-only`, `good-first-issue`.
 8. **If a bot fails with "Resource not accessible by integration":** Settings → Actions → General → Workflow permissions → **Read and write permissions**.
+9. **Optional: private questions by email.** Deploy the `ask-api/` folder to Vercel and switch it on in the Ask Us form. Step-by-step in [ask-api/README.md](ask-api/README.md). The Resend key goes in Vercel only.
 
 ## The bots
 

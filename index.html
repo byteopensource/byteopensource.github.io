@@ -832,7 +832,12 @@
           <div class="details">
             <span class="tape"></span>
             <p class="details__title hand">your question</p>
-            <form class="details__form ask-form">
+            <!-- data-email-endpoint: the Vercel function URL (see ask-api/README.md). Empty = GitHub only. -->
+            <form class="details__form ask-form" data-email-endpoint="">
+              <div class="toggle ask-form__mode" role="group" aria-label="How should we reply?" hidden>
+                <button type="button" aria-pressed="true" data-mode="github">On GitHub <span class="hand">(public)</span></button>
+                <button type="button" aria-pressed="false" data-mode="email">By email <span class="hand">(private)</span></button>
+              </div>
               <fieldset class="topics">
                 <legend>What's it about?</legend>
                 <label><input type="radio" name="topic" value="Setup" checked /><span>Setting up</span></label>
@@ -848,9 +853,20 @@
               <label>Details
                 <textarea name="body" rows="6" maxlength="2000" placeholder="What were you trying to do? What did you try? Paste the exact error message."></textarea>
               </label>
+              <div class="ask-form__email-only" hidden>
+                <label>Your name
+                  <input name="askName" autocomplete="name" maxlength="80" placeholder="e.g. Riya Sharma" />
+                </label>
+                <label>Your email, so we can reply
+                  <input name="askEmail" type="email" autocomplete="email" maxlength="120" placeholder="you@example.com" />
+                </label>
+                <p class="ask-form__privacy">Only the club sees your email. We use it to reply, nothing else.</p>
+              </div>
+              <!-- Spam trap: hidden from people, bots fill it in -->
+              <label class="ask-form__trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off" /></label>
               <div class="ask-form__foot">
-                <button class="btn" type="submit">Post my question <span aria-hidden="true">↗</span></button>
-                <span class="hand">opens GitHub in a new tab</span>
+                <button class="btn" type="submit"><span class="ask-form__label">Post my question</span> <span aria-hidden="true" class="ask-form__arrow">↗</span></button>
+                <span class="hand ask-form__hint">opens GitHub in a new tab</span>
               </div>
               <p class="ask-form__sent hand" role="status" hidden>GitHub is open in a new tab. Click <strong>Start discussion</strong> there to post it ✓</p>
             </form>

@@ -1587,6 +1587,13 @@ main { counter-reset: section; }
 .ask-form__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 4px; }
 .ask-form__foot .hand { font-size: 1.3rem; }
 .ask-form__sent { margin: 0; font-size: 1.35rem; color: var(--red); }
+.ask-form__mode { margin: 0 0 4px; }
+.ask-form__email-only { display: grid; gap: 14px; }
+.ask-form__email-only[hidden] { display: none; }
+.ask-form__privacy { margin: -6px 0 0; font-size: 0.8rem; opacity: 0.75; }
+/* Spam trap: off-screen for people, still in the form for bots */
+.ask-form__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ask-form button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
 
 @media (max-width: 860px) {
   .ask-us__grid { grid-template-columns: minmax(0, 1fr); margin-top: 40px; }

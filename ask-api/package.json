@@ -1,0 +1,7 @@
+{
+  "name": "byte-ask-api",
+  "private": true,
+  "type": "module",
+  "description": "One Vercel function that emails Ask Us questions to the club. The website itself stays on GitHub Pages.",
+  "engines": { "node": ">=20" }
+}

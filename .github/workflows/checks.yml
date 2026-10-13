@@ -3,7 +3,7 @@ name: Checks
 # Read-only checks on pull requests that change the bots or the data script.
 on:
   pull_request:
-    paths: [".github/workflows/**", "scripts/**", "contributors/**"]
+    paths: [".github/workflows/**", "scripts/**", "contributors/**", "ask-api/**"]
 
 permissions:
   contents: read
@@ -18,5 +18,7 @@ jobs:
           node-version: 24
       - name: Bot tests
         run: node scripts/test-workflows.mjs
+      - name: Ask Us email function tests
+        run: node ask-api/test.mjs
       - name: Contributor files build cleanly
         run: node scripts/build-data.mjs
