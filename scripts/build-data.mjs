@@ -92,16 +92,25 @@ async function buildStats() {
       merged++;
       if (NOT_ON_BOARD.has(pr.user.login.toLowerCase())) continue;
       const level = Math.max(1, ...pr.labels.map((l) => Number(/^level-(\d)$/.exec(l.name)?.[1] || 0)));
-      const s = scores.get(pr.user.login) || { github: pr.user.login, prs: 0, points: 0 };
+      const s = scores.get(pr.user.login) || { github: pr.user.login, prs: 0, points: 0, level1: false };
+      const isLevel1 = pr.labels.some((l) => l.name === "level-1");
+      if (isLevel1 && s.level1) continue; // one Level 1 PR per person, so a duplicate doesn't score twice
+      s.level1 ||= isLevel1;
       s.prs++;
       s.points += level;
       scores.set(pr.user.login, s);
     }
     if (items.length < 100) break;
   }
-  const leaderboard = [...scores.values()].sort((a, b) => b.points - a.points || b.prs - a.prs).slice(0, 10);
+  const leaderboard = [...scores.values()]
+    .sort((a, b) => b.points - a.points || b.prs - a.prs)
+    .slice(0, 10)
+    .map(({ level1, ...s }) => s);
 
-  return { merged, issues, leaderboard };
+  // The website hides its GitHub Discussions links while Discussions is switched off in the repo.
+  const { has_discussions: discussions } = await gh(`/repos/${REPO}`);
+
+  return { merged, issues, leaderboard, discussions };
 }
 
 await writeFile("contributors.json", JSON.stringify(await buildContributors(), null, 2) + "\n");

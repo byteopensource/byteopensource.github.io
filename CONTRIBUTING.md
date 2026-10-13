@@ -1,7 +1,7 @@
 # Contributing to Open Source BYTE 2K26
 
 Welcome! This guide covers everything from your very first pull request to building whole features.
-If anything here is confusing, that's a bug in this guide. [Ask us](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/discussions/new?category=q-a) and then fix it in a PR. That's a great Level 2 contribution.
+If anything here is confusing, that's a bug in this guide. [Ask us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask) and then fix it in a PR. That's a great Level 2 contribution.
 
 **Contents:** [The rules](#the-rules) · [Level 0](#level-0--set-up) · [Level 1](#level-1--your-first-pr) · [Level 2–4](#levels-24--working-on-issues) · [Level 5](#level-5--graduate) · [Run the site locally](#run-the-site-locally) · [Code style](#code-style) · [After you open a PR](#after-you-open-a-pr) · [Common git problems](#common-git-problems)
 
@@ -216,4 +216,4 @@ git config --global core.autocrlf true
 ```
 </details>
 
-Still stuck? [Ask in Discussions](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/discussions/new?category=q-a). Paste the exact error message and what you ran.
+Still stuck? [Ask us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask). Paste the exact error message and what you ran.

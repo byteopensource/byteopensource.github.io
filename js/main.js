@@ -313,6 +313,7 @@ const askEndpoint = askForm.dataset.emailEndpoint;
 const askModeBtns = [...askForm.querySelectorAll(".ask-form__mode button")];
 const ASK_KEY = "byte-ask-draft";
 let askMode = "github";
+let discussionsOff = false; // set from stats.json: Discussions is switched off in the repo
 
 try {
   const draft = JSON.parse(localStorage.getItem(ASK_KEY)) || {};
@@ -321,7 +322,7 @@ try {
 
 function updateAsk() {
   const title = askForm.elements.title.value.trim();
-  askSearch.hidden = title.length < 3;
+  askSearch.hidden = discussionsOff || title.length < 3;
   askSearch.querySelector("a").href = `${REPO}/discussions?discussions_q=${encodeURIComponent(title)}`;
   askSent.hidden = true;
   const { website, ...draft } = Object.fromEntries(new FormData(askForm)); // never save the spam trap
@@ -482,8 +483,21 @@ fetch("stats.json")
   .then((stats) => {
     renderIssues(stats.issues || {});
     renderBoard(stats);
+    if (stats.discussions === false) hideDiscussions();
   })
   .catch(() => {}); // no stats yet: cards keep their plain "Find an issue" buttons
+
+// While Discussions is switched off in the repo, its links would 404: hide them and use email instead.
+// Once a maintainer turns Discussions on, the next deploy flips this back automatically.
+function hideDiscussions() {
+  discussionsOff = true;
+  document.querySelectorAll('a[href$="/discussions"]').forEach((a) => a.closest("li")?.remove());
+  askSearch.hidden = true;
+  if (askEndpoint) {
+    setAskMode("email");
+    askForm.querySelector(".ask-form__mode").hidden = true;
+  }
+}
 
 // ---------- Git, Decoded: filter the cards as you type ----------
 const cheatSearch = document.querySelector(".cheats__search input");

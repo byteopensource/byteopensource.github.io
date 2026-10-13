@@ -10,7 +10,7 @@
   <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/">Website</a> ·
   <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#first-pr">Make your first PR</a> ·
   <a href="CONTRIBUTING.md">Contributing guide</a> ·
-  <a href="https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/discussions">Ask a question</a>
+  <a href="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask">Ask a question</a>
 </p>
 
 ---
@@ -78,7 +78,7 @@ Then open http://localhost:5500. (Opening `index.html` directly won't load the d
 ## Community
 
 - Be kind. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
-- Questions go in [Discussions](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/discussions), and no question is too basic.
+- Questions go to [Ask Us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask) on the website (publicly on GitHub, or privately by email), and no question is too basic.
 - Maintainers: see [MAINTAINERS.md](MAINTAINERS.md) for setup and review guidelines.
 - Follow the club: [Instagram](https://www.instagram.com/thebyteclubnie/) · [LinkedIn](https://www.linkedin.com/company/thebyteclubnie) · [Website](https://byteclubnie.vercel.app/) · [thebyteclub@nie.ac.in](mailto:thebyteclub@nie.ac.in)
 

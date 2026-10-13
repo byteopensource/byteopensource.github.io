@@ -54,7 +54,7 @@ jobs:
               "",
               `You have **${time}** to open a pull request. Put \`Closes #${issue.number}\` in its description so it links up.`,
               "A draft pull request counts too, so open one early if you need more time.",
-              "Stuck? Ask right here, or in Discussions.",
+              "Stuck? Ask right here, or use Ask Us on the website.",
             ].join("\n"));
 
   expire:
