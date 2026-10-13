@@ -10,6 +10,16 @@
     "summary": "Git started when Linux needed a new tool overnight. What Git actually does, the mistakes students make, and the small habits that keep a team moving."
   },
   {
+    "title": "How to Read Code You Didn't Write",
+    "url": "blog/how-to-read-code.html",
+    "author": "The BYTE Club",
+    "date": "2026-10-13",
+    "minutes": 6,
+    "tag": "guide",
+    "cover": "assets/blog/how-to-read-code.svg",
+    "summary": "Opening a real project for the first time is overwhelming. How to find the code behind anything on screen, using this website as the example."
+  },
+  {
     "title": "What Is Open Source, and Why Is Nobody Telling You?",
     "url": "blog/what-is-open-source.html",
     "author": "The BYTE Club",

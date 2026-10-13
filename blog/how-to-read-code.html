@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Opening a real project for the first time is overwhelming. How to find the code behind anything on screen, using this website as the example." />
+  <meta name="theme-color" content="#b8def2" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How to Read Code You Didn't Write" />
+  <meta property="og:description" content="Opening a real project for the first time is overwhelming. How to find the code behind anything on screen, using this website as the example." />
+  <meta property="og:url" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/blog/how-to-read-code.html" />
+  <meta property="og:image" content="https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>How to Read Code You Didn't Write · BYTE Blog</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Knewave&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try { if (localStorage.getItem("byte-theme") === "byte") document.documentElement.dataset.theme = "byte"; } catch {}</script>
+</head>
+<body>
+  <a class="skip" href="#post">Skip to the post</a>
+  <div class="read-progress" aria-hidden="true"></div>
+
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="logo" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+      <a class="btn btn--outline btn--sm" href="../index.html#blog"><span aria-hidden="true">←</span> All posts</a>
+    </div>
+  </header>
+
+  <main id="post">
+    <article class="article">
+      <header class="article__head">
+        <span class="post__tag">Guide</span>
+        <h1 class="display article__title">How to Read Code You Didn't Write</h1>
+        <p class="article__meta">The BYTE Club · <time datetime="2026-10-13">13 Oct 2026</time> · 6 min read</p>
+      </header>
+
+      <figure class="article__cover">
+        <img src="../assets/blog/how-to-read-code.svg" alt="" width="1200" height="675" />
+      </figure>
+
+      <p class="article__lede">The first time I opened a real open source project, I scrolled through it for ten minutes, understood almost nothing, and closed the tab. If that has happened to you, here's the good news: nobody reads a codebase the way you were trying to.</p>
+
+      <h2>Nobody reads it from the top</h2>
+      <p>Tutorials show you code in order. One file, top to bottom, every line explained. Real projects don't work like that.</p>
+      <p>Even this website is bigger than it looks. It has about 750 lines of JavaScript, 1,800 lines of CSS and 900 lines of HTML. People who have worked on a project for years don't carry all of it in their heads either. They carry a rough map, and they look up the rest when they need it.</p>
+      <p>So stop trying to understand everything. Pick one thing and follow it.</p>
+
+      <h2>Start from something you can see</h2>
+      <p>Choose something you can actually see on the screen. We'll use the copy buttons in the <a href="../index.html#cheatsheet">Git, Decoded</a> cheat sheet on our homepage. You click "copy", it says "copied ✓" for a second, and the command is on your clipboard.</p>
+      <p>Somewhere in this project there are a few lines that make that happen. Let's find them.</p>
+
+      <h3>Step 1: Inspect it</h3>
+      <p>Right-click a copy button and choose <strong>Inspect</strong>. Your browser opens the HTML for that exact element:</p>
+<pre><code>&lt;button class="copy" type="button"&gt;copy&lt;/button&gt;</code></pre>
+      <p>That class name, <code>copy</code>, is your first clue. CSS and JavaScript find elements on the page through class names and ids, so they're usually the thread worth pulling.</p>
+
+      <h3>Step 2: Search the whole project</h3>
+      <p>Open the project in VS Code and press <strong>Ctrl+Shift+F</strong> (Cmd+Shift+F on a Mac) to search every file at once. Search for <code>.copy</code>.</p>
+      <p>You'll get a handful of results. The ones in <code>css/style.css</code> decide how the button looks. The one in <code>js/main.js</code> decides what it does. That's the one we want.</p>
+
+      <h3>Step 3: Read only that part</h3>
+      <p>Here it is:</p>
+<pre><code>// Copy buttons on every code block.
+document.addEventListener("click", async (e) =&gt; {
+  const btn = e.target.closest(".copy");
+  if (!btn) return;
+  try {
+    await navigator.clipboard.writeText(btn.parentElement.querySelector("code").innerText.trim());
+    btn.textContent = "copied ✓";
+  } catch {
+    btn.textContent = "select + ctrl+c";
+  }
+  setTimeout(() =&gt; (btn.textContent = "copy"), 1600);
+});</code></pre>
+      <p>You don't need to know every word to get the idea. Read it like a sentence: whenever something on the page is clicked, check whether it was a copy button. If it was, copy the text from the code block next to it and change the label to "copied ✓". If copying fails, ask the person to copy it by hand. After 1.6 seconds, put the label back.</p>
+      <p>If a word is new to you, like <code>closest</code>, look up only that word. <a href="https://developer.mozilla.org/">MDN</a> is the best place for anything that runs in a browser. You learn a language one lookup at a time, and that's completely fine.</p>
+
+      <h3>Step 4: Change it and watch</h3>
+      <p>Now break it on purpose. Run the site on your laptop (CONTRIBUTING.md shows how), change <code>"copied ✓"</code> to <code>"got it!"</code>, save, and click a copy button.</p>
+      <p>If your new text shows up, you've proven you found the right code. Nothing checks a guess faster. Change it back when you're done.</p>
+      <figure class="article__figure">
+        <svg viewBox="0 0 1200 675" role="img" aria-labelledby="fig-trail-t fig-trail-d"><title id="fig-trail-t">Follow the trail</title><desc id="fig-trail-d">Five steps for finding the code behind something on screen: see it, inspect it with right-click, search the project for it with Ctrl+Shift+F, read just that one function, then change it and watch what happens. Then pick the next thing; each loop adds to your map of the project.</desc><defs><marker id="fig-trail-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#4b3832"/></marker></defs><rect width="1200" height="675" fill="#f8efe4"/><text x="600" y="80" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="42" fill="#3b2f2b">Follow the trail</text><text x="600" y="122" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="30" fill="#3b2f2b">from something on screen to the line of code behind it</text><g transform="rotate(-1.5 135 270)"><rect x="30" y="165" width="210" height="210" rx="18" fill="#fbd38d" stroke="#4b3832" stroke-width="4"/><path d="M78 228 Q120 196 162 228 Q120 260 78 228 Z" fill="#fffaf3" stroke="#4b3832" stroke-width="4"/><circle cx="120" cy="228" r="12" fill="#4b3832"/><text x="135" y="312" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="26" fill="#3b2f2b">See it</text><text x="135" y="348" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#3b2f2b">pick one thing</text></g><text x="54" y="158" text-anchor="middle" font-family="Knewave, cursive" font-weight="400" font-size="40" fill="#c4532a">1</text><path d="M244 270 H260" stroke="#4b3832" stroke-width="4" marker-end="url(#fig-trail-arrow)"/><g transform="rotate(1 369 270)"><rect x="264" y="165" width="210" height="210" rx="18" fill="#7fbcb8" stroke="#4b3832" stroke-width="4"/><path d="M343 200 L343 252 L356 239 L366 262 L376 257 L366 235 L384 235 Z" fill="#fffaf3" stroke="#4b3832" stroke-width="4" stroke-linejoin="round"/><text x="369" y="312" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="26" fill="#3b2f2b">Inspect it</text><text x="369" y="348" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#3b2f2b">right-click it</text></g><text x="288" y="158" text-anchor="middle" font-family="Knewave, cursive" font-weight="400" font-size="40" fill="#c4532a">2</text><path d="M478 270 H494" stroke="#4b3832" stroke-width="4" marker-end="url(#fig-trail-arrow)"/><g transform="rotate(-1 603 270)"><rect x="498" y="165" width="210" height="210" rx="18" fill="#f6a77a" stroke="#4b3832" stroke-width="4"/><circle cx="590" cy="222" r="24" fill="#fffaf3" stroke="#4b3832" stroke-width="5"/><path d="M608 240 L628 260" stroke="#4b3832" stroke-width="8" stroke-linecap="round"/><text x="603" y="312" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="26" fill="#3b2f2b">Search it</text><text x="603" y="348" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#3b2f2b">Ctrl+Shift+F</text></g><text x="522" y="158" text-anchor="middle" font-family="Knewave, cursive" font-weight="400" font-size="40" fill="#c4532a">3</text><path d="M712 270 H728" stroke="#4b3832" stroke-width="4" marker-end="url(#fig-trail-arrow)"/><g transform="rotate(1.5 837 270)"><rect x="732" y="165" width="210" height="210" rx="18" fill="#ffd9c2" stroke="#4b3832" stroke-width="4"/><rect x="810" y="198" width="70" height="62" rx="8" fill="#fffaf3" stroke="#4b3832" stroke-width="4"/><path d="M822 214 H866 M822 229 H858 M822 244 H870" stroke="#ee8a5b" stroke-width="5" stroke-linecap="round"/><text x="837" y="312" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="26" fill="#3b2f2b">Read just that</text><text x="837" y="348" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#3b2f2b">one function</text></g><text x="756" y="158" text-anchor="middle" font-family="Knewave, cursive" font-weight="400" font-size="40" fill="#c4532a">4</text><path d="M946 270 H962" stroke="#4b3832" stroke-width="4" marker-end="url(#fig-trail-arrow)"/><g transform="rotate(-1 1071 270)"><rect x="966" y="165" width="210" height="210" rx="18" fill="#fbd38d" stroke="#4b3832" stroke-width="4"/><g transform="rotate(-35 1080 230)"><rect x="1030" y="219" width="12" height="22" fill="#ee8a5b" stroke="#4b3832" stroke-width="4"/><rect x="1042" y="219" width="58" height="22" fill="#7fbcb8" stroke="#4b3832" stroke-width="4"/><path d="M1100 219 L1124 230 L1100 241 Z" fill="#fffaf3" stroke="#4b3832" stroke-width="4" stroke-linejoin="round"/></g><text x="1071" y="312" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="700" font-size="26" fill="#3b2f2b">Change it</text><text x="1071" y="348" text-anchor="middle" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#3b2f2b">and watch</text></g><text x="990" y="158" text-anchor="middle" font-family="Knewave, cursive" font-weight="400" font-size="40" fill="#c4532a">5</text><path d="M1080 385 C 1080 520, 120 520, 120 392" fill="none" stroke="#4b3832" stroke-width="4" stroke-dasharray="10 9" marker-end="url(#fig-trail-arrow)"/><text x="600" y="545" text-anchor="middle" font-family="Caveat, cursive" font-weight="700" font-size="36" fill="#c4532a">then pick the next thing</text><text x="600" y="620" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="500" font-size="25" fill="#3b2f2b">Each loop adds a street to the map of the project in your head.</text></svg>
+      </figure>
+      <aside class="nudge"><span class="nudge__label">nudge</span>Our homepage has a hidden terminal. Click the dark terminal window in the hero, type <code>coffee</code> and press Enter. Now find the exact line in the project that wrote that reply, using only the four steps above.</aside>
+
+      <h2>Read the boring files first</h2>
+      <p>Before you go hunting, spend five minutes on the files nobody finds exciting. The README tells you what the project is and how to run it. CONTRIBUTING tells you the rules, and in a good project it also tells you where things live.</p>
+      <p>Ours has a table that says <code>js/main.js</code> is "everything interactive, in commented blocks". That one line already tells you where to look for any button, animation or form on the site.</p>
+      <p>Then look at the folder names. They're small hints. A folder called <code>tests</code> is not where the button lives.</p>
+
+      <h2>Let Git answer your questions</h2>
+      <p>The code tells you <em>what</em> it does. Git can often tell you <em>why</em>.</p>
+<pre><code>git log --oneline -- js/main.js</code></pre>
+      <p>This lists every commit that touched that file, newest first.</p>
+<pre><code>git blame js/main.js</code></pre>
+      <p>This shows, for every single line, the last commit that changed it and who made it. Find a line that confuses you, copy its commit id, and run <code>git show &lt;id&gt;</code> to read the message and the whole change around it.</p>
+<pre><code>git log -S "copied ✓" --oneline</code></pre>
+      <p>This finds the commits where that exact text was added or removed. It's handy when you want to know when something appeared and what came with it.</p>
+      <p>A good commit message is someone explaining their thinking to a stranger from the future. That stranger is you right now. It's also a good reason to write proper ones yourself.</p>
+
+      <h2>Keep a scrappy map</h2>
+      <p>As you go, write down what you find. It doesn't need to be neat. Something like this is plenty:</p>
+<pre><code>copy button
+  html  &lt;button class="copy"&gt; inside every code block
+  js    main.js, "Copy buttons on every code block"
+  css   .copy in style.css</code></pre>
+      <p>Ten minutes later this note is gold, because you will forget. Everyone forgets. The difference is that some people wrote it down.</p>
+
+      <h2>Stuck for 30 minutes? Ask.</h2>
+      <p>Struggling and being stuck are different things. Struggling means you're still learning something new every few minutes, and that's good. Stuck means you're going around in circles.</p>
+      <p>Give yourself about 30 minutes, then ask. A question that gets answered fast usually has these four things in it:</p>
+      <ul>
+        <li><strong>What you're trying to do.</strong> One sentence is enough.</li>
+        <li><strong>Where you've looked.</strong> File names and function names help a lot.</li>
+        <li><strong>What you expected, and what happened instead.</strong></li>
+        <li><strong>The exact error message,</strong> pasted, not retyped from memory.</li>
+      </ul>
+      <p>The person helping you doesn't have to start from zero, so you get your answer in minutes instead of a day. Ask on the issue you're working on, or use the <a href="../index.html#ask">Ask Us</a> form.</p>
+
+      <div class="article__task">
+        <span class="tape"></span>
+        <p class="article__task-label hand">your task for today</p>
+        <p>Open any <code>level-3</code> issue on our repo. Before writing a single line of code, find the exact file and lines it would change. If you can, you're ready to claim one.</p>
+      </div>
+      <p class="article__signoff hand">The confusion fades faster than you think. Pick one thing and follow it ✱</p>
+
+      <footer class="article__end">
+        <p>Want real code to practise on?</p>
+        <a class="btn" href="https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues?q=is%3Aopen+label%3Alevel-3">See the Level 3 issues <span aria-hidden="true">→</span></a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bar">
+      <div class="container footer__inner">
+        <a class="logo logo--light" href="../index.html"><img class="logo__badge" src="../assets/byte-logo.webp" alt="The BYTE Club" width="56" height="56" /><span class="logo__text">Open Source<br />2K26</span></a>
+        <ul class="socials" aria-label="The BYTE Club elsewhere">
+          <li><a href="https://www.instagram.com/thebyteclubnie/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" class="dot" /></svg></a></li>
+          <li><a href="https://www.linkedin.com/company/thebyteclubnie" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.8 2.8 0 0 1 5.6 0V17" /></svg></a></li>
+          <li><a href="mailto:thebyteclub@nie.ac.in" aria-label="Email thebyteclub@nie.ac.in" title="thebyteclub@nie.ac.in"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6.5 8.5-6.5" /></svg></a></li>
+          <li><a href="https://byteclubnie.vercel.app/" target="_blank" rel="noopener" aria-label="The BYTE Club website" title="Club website"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9M12 3C9.5 5.6 8.2 8.6 8.2 12s1.3 6.4 3.8 9" /></svg></a></li>
+        </ul>
+        <p class="footer__credit">Built by students of NIE, for students of NIE ♡<br />The BYTE Club · 2026</p>
+        <a class="footer__top" href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress bar along the top of the page.
+    const bar = document.querySelector(".read-progress");
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.scale = `${max > 0 ? Math.min(1, scrollY / max) : 1} 1`;
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+  </script>
+</body>
+</html>
