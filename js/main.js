@@ -644,6 +644,14 @@ fetch("blogs.json")
     }
     renderPosts();
     blogSection.hidden = false;
+    // The section was hidden when the page opened, so a link to #blog (like "All posts" on a
+    // blog post) couldn't scroll to it yet. Do it now that it exists.
+    // Instant, and only after the page has loaded: a smooth scroll gets cut short by the browser's own load-time scroll.
+    if (location.hash === "#blog") {
+      const goToBlog = () => blogSection.scrollIntoView({ behavior: "instant" });
+      if (document.readyState === "complete") goToBlog();
+      else addEventListener("load", goToBlog, { once: true });
+    }
     document.querySelector('.nav a[href="#blog"]').parentElement.hidden = false;
   })
   .catch(() => {});
