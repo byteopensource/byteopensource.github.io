@@ -83,19 +83,23 @@ async function buildStats() {
 
   // A merged PR scores its level label (level-3 = 3 points); unlabelled PRs score 1.
   const scores = new Map();
+  const hadLevel1 = new Set();
   let merged = 0;
   for (let page = 1; page <= 10; page++) { // search caps at 1000 results
     const q = encodeURIComponent(`repo:${REPO} is:pr is:merged`);
     const { items } = await gh(`/search/issues?q=${q}&per_page=100&page=${page}`);
     for (const pr of items) {
       if (pr.user.type === "Bot") continue;
+      // One Level 1 PR per person: an accidental duplicate counts nowhere, neither on the board nor in the total.
+      const login = pr.user.login.toLowerCase();
+      if (pr.labels.some((l) => l.name === "level-1")) {
+        if (hadLevel1.has(login)) continue;
+        hadLevel1.add(login);
+      }
       merged++;
-      if (NOT_ON_BOARD.has(pr.user.login.toLowerCase())) continue;
+      if (NOT_ON_BOARD.has(login)) continue;
       const level = Math.max(1, ...pr.labels.map((l) => Number(/^level-(\d)$/.exec(l.name)?.[1] || 0)));
-      const s = scores.get(pr.user.login) || { github: pr.user.login, prs: 0, points: 0, level1: false };
-      const isLevel1 = pr.labels.some((l) => l.name === "level-1");
-      if (isLevel1 && s.level1) continue; // one Level 1 PR per person, so a duplicate doesn't score twice
-      s.level1 ||= isLevel1;
+      const s = scores.get(pr.user.login) || { github: pr.user.login, prs: 0, points: 0 };
       s.prs++;
       s.points += level;
       scores.set(pr.user.login, s);
@@ -104,8 +108,7 @@ async function buildStats() {
   }
   const leaderboard = [...scores.values()]
     .sort((a, b) => b.points - a.points || b.prs - a.prs)
-    .slice(0, 10)
-    .map(({ level1, ...s }) => s);
+    .slice(0, 10);
 
   // The website hides its GitHub Discussions links while Discussions is switched off in the repo.
   const { has_discussions: discussions } = await gh(`/repos/${REPO}`);
