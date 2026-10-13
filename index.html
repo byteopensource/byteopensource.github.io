@@ -266,7 +266,7 @@
             <h3 class="display level-card__title">Graduate</h3>
             <p>The real goal. Find a project you actually use and get a pull request merged there. Graduates go in the Hall of Fame.</p>
             <a class="btn" href="https://goodfirstissue.dev">Find a beginner issue <span aria-hidden="true">→</span></a>
-            <p class="live-issues"><a href="#contributors" data-show-grads>See the Hall of Fame →</a></p>
+            <p class="live-issues"><a href="#contributors" data-show-grads>See the Hall of Fame →</a><br /><a href="#beyond">Where to go next ↓</a></p>
           </div>
           <div>
             <p class="level-card__label hand">you'll do</p>
@@ -328,6 +328,19 @@
               <button class="copy" type="button">copy</button>
               <pre><code class="json-preview"></code></pre>
             </div>
+
+            <!-- Shown once a valid username is typed -->
+            <div class="shortcuts" hidden>
+              <p class="details__title hand">your shortcuts</p>
+              <ul>
+                <li><a data-link="fork" target="_blank" rel="noopener">Your fork ↗</a></li>
+                <li><a data-link="prs" target="_blank" rel="noopener">Your pull requests ↗</a></li>
+                <li><a data-link="issues" target="_blank" rel="noopener">Issues you've claimed ↗</a></li>
+              </ul>
+              <p class="shortcuts__label">Merged? Show it off on your GitHub profile README:</p>
+              <img class="shortcuts__badge" src="https://img.shields.io/badge/Open_Source_BYTE_2K26-contributor-e3341e?labelColor=16213e" alt="Badge: Open Source BYTE 2K26 contributor" height="20" loading="lazy" />
+              <div class="code"><button class="copy" type="button">copy</button><pre><code>[![Open Source BYTE 2K26 contributor](https://img.shields.io/badge/Open_Source_BYTE_2K26-contributor-e3341e?labelColor=16213e)](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/)</code></pre></div>
+            </div>
           </div>
 
           <!-- Right: the steps -->
@@ -338,6 +351,22 @@
             </div>
 
             <ol class="steps" id="way-terminal">
+              <li>
+                <h3>Set up Git (once per laptop)</h3>
+                <p>Check whether you already have it. If you see a version number, you're set.</p>
+                <div class="code"><button class="copy" type="button">copy</button><pre><code><span>git --version</span></code></pre></div>
+                <details class="install">
+                  <summary>Don't have Git yet?</summary>
+                  <ul>
+                    <li><strong>Windows:</strong> download it from <a href="https://git-scm.com/downloads/win">git-scm.com</a> and keep every default option.</li>
+                    <li><strong>Mac:</strong> run <code>xcode-select --install</code> in Terminal.</li>
+                    <li><strong>Linux:</strong> run <code>sudo apt install git</code>.</li>
+                  </ul>
+                  <p>Can't install anything? <a href="https://codespaces.new/TheBYTEClubNIE/Open-Source_BYTE_2K26">Open the project in GitHub Codespaces</a>. It's VS Code and Git in your browser, free for students.</p>
+                </details>
+                <p>Then tell Git who you are, or your first commit will fail. Use the email on your GitHub account so commits show up on your profile.</p>
+                <div class="code"><button class="copy" type="button">copy</button><pre><code><span>git config --global user.name "<span data-name>Your Name</span>"</span><span>git config --global user.email "you@example.com"</span></code></pre></div>
+              </li>
               <li>
                 <h3>Fork the repo</h3>
                 <p>This makes your own copy on GitHub that you're allowed to change.</p>
@@ -466,6 +495,26 @@
           </article>
         </div>
 
+        <h3 class="glossary__title hand">words you'll hear</h3>
+        <dl class="glossary">
+          <div class="word"><dt>Repository (repo)</dt><dd>A project's folder of files plus its full history. This website is one.</dd></div>
+          <div class="word"><dt>Fork</dt><dd>Your own copy of someone's repo, on GitHub. You can change it freely.</dd></div>
+          <div class="word"><dt>Clone</dt><dd>A copy of a repo on your laptop, so you can edit the files there.</dd></div>
+          <div class="word"><dt>Branch</dt><dd>A separate line of work inside a repo. One branch per change keeps things tidy.</dd></div>
+          <div class="word"><dt>Commit</dt><dd>A saved snapshot of your changes, with a message saying what you did.</dd></div>
+          <div class="word"><dt>Push</dt><dd>Uploading your commits from your laptop to GitHub.</dd></div>
+          <div class="word"><dt>Pull request (PR)</dt><dd>Asking the maintainers to pull your changes into their project. Review happens here.</dd></div>
+          <div class="word"><dt>Merge</dt><dd>When a PR is accepted and your changes become part of the project.</dd></div>
+          <div class="word"><dt>Merge conflict</dt><dd>Two people changed the same lines, so Git needs a human to pick what stays.</dd></div>
+          <div class="word"><dt>Issue</dt><dd>A task, bug or idea written on the project's GitHub page. Your next job lives here.</dd></div>
+          <div class="word"><dt>Maintainer</dt><dd>Someone who looks after a project: reviews PRs, answers questions, merges changes.</dd></div>
+          <div class="word"><dt>Upstream and origin</dt><dd><code>upstream</code> is the club's repo. <code>origin</code> is your fork.</dd></div>
+          <div class="word"><dt>main</dt><dd>The project's main branch. What's on <code>main</code> is what's live.</dd></div>
+          <div class="word"><dt>Diff</dt><dd>The exact lines a change adds and removes, shown in red and green.</dd></div>
+          <div class="word"><dt>README</dt><dd>The front page of a repo. Read it first in any project.</dd></div>
+          <div class="word"><dt>CONTRIBUTING</dt><dd>A project's rules for contributors. Read it before your first PR there.</dd></div>
+        </dl>
+
         <p class="cheats__empty hand" hidden>Nothing for that yet. <a href="#ask">Ask us ↓</a></p>
 
       </div>
@@ -537,8 +586,64 @@
       </div>
     </section>
 
+    <section class="band beyond" id="beyond">
+      <div class="container">
+
+        <div class="section-head">
+          <div>
+            <p class="kicker">Next steps</p>
+            <h2 class="display section-title">Beyond BYTE</h2>
+            <p class="section-lede">Level 5 is where this program ends and the real thing starts. These programs take students every year, and many of them pay. Your BYTE pull requests are the practice round.</p>
+          </div>
+          <p class="section-aside hand">Dates change every<br />year. Always check<br />the official site ✱</p>
+        </div>
+
+        <div class="programs">
+          <a class="program" href="https://hacktoberfest.com/" target="_blank" rel="noopener">
+            <span class="program__when">Every October</span>
+            <h3 class="program__name">Hacktoberfest</h3>
+            <p>A month-long open source celebration with events to learn and build together. The easiest place to start.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+          <a class="program" href="https://gssoc.girlscript.tech/" target="_blank" rel="noopener">
+            <span class="program__when">Summer</span>
+            <h3 class="program__name">GirlScript Summer of Code</h3>
+            <p>India's big beginner-friendly program. Months of contributing to projects with mentors, open to everyone.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+          <a class="program" href="https://summerofcode.withgoogle.com/" target="_blank" rel="noopener">
+            <span class="program__when">Applications in spring · paid</span>
+            <h3 class="program__name">Google Summer of Code</h3>
+            <p>Spend the summer on a real project with an open source organisation and a mentor, with a stipend from Google.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+          <a class="program" href="https://lfx.linuxfoundation.org/tools/mentorship/" target="_blank" rel="noopener">
+            <span class="program__when">Several terms a year · paid</span>
+            <h3 class="program__name">LFX Mentorship</h3>
+            <p>Paid mentorships on Linux Foundation projects like Kubernetes and Node.js tooling.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+          <a class="program" href="https://fellowship.mlh.io/" target="_blank" rel="noopener">
+            <span class="program__when">Several batches a year</span>
+            <h3 class="program__name">MLH Fellowship</h3>
+            <p>A remote, 12-week program where you contribute to open source in a small team.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+          <a class="program" href="https://www.outreachy.org/" target="_blank" rel="noopener">
+            <span class="program__when">Two rounds a year · paid</span>
+            <h3 class="program__name">Outreachy</h3>
+            <p>Paid internships in open source for people underrepresented in tech.</p>
+            <span class="program__go hand">visit ↗</span>
+          </a>
+        </div>
+
+        <p class="beyond__tip">Most of these ask what you've already contributed. A few merged PRs here, with good descriptions, make your application stronger.</p>
+
+      </div>
+    </section>
+
     <!-- Filled from blogs.json. Stays hidden until there's at least one post. -->
-    <section class="band blog" id="blog" hidden>
+    <section class="blog" id="blog" hidden>
       <div class="container">
 
         <div class="section-head">
@@ -570,7 +675,7 @@
       </div>
     </section>
 
-    <section class="faq" id="faq">
+    <section class="band faq" id="faq">
       <div class="container faq__inner">
 
         <div class="faq__side">
@@ -623,7 +728,7 @@
 
       </div>
     </section>
-    <section class="band ask-us" id="ask">
+    <section class="ask-us" id="ask">
       <div class="container">
 
         <div class="section-head">
@@ -664,6 +769,7 @@
             </form>
           </div>
 
+          <div>
           <ol class="steps">
             <li>
               <h3>You post it</h3>
@@ -678,6 +784,15 @@
               <p>Your question stays public, so the next student with the same problem finds the answer. Mark the reply that fixed it as the answer.</p>
             </li>
           </ol>
+
+          <div class="team">
+            <p class="team__title hand">who'll answer you</p>
+            <ul class="team__list">
+              <li><a href="https://github.com/CALL-ME-TATA" target="_blank" rel="noopener"><img src="https://github.com/CALL-ME-TATA.png?size=96" alt="" width="48" height="48" loading="lazy" /><span><b>Tanishq Dhawan</b><small>@CALL-ME-TATA · Maintainer</small></span></a></li>
+              <li><a href="https://github.com/riteshkrkarn" target="_blank" rel="noopener"><img src="https://github.com/riteshkrkarn.png?size=96" alt="" width="48" height="48" loading="lazy" /><span><b>Ritesh Kumar Karn</b><small>@riteshkrkarn · Maintainer</small></span></a></li>
+            </ul>
+          </div>
+          </div>
 
         </div>
       </div>
