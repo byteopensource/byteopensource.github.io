@@ -1536,7 +1536,7 @@ main { counter-reset: section; }
   align-items: center;
   justify-content: space-between;
   gap: 24px 40px;
-  padding-block: 36px;
+  padding-block: 36px 84px; /* room for the floating dock at the very bottom */
 }
 .logo--light .logo__text::after { color: var(--yellow); }
 .logo--light .logo__badge { width: 72px; height: 72px; }
@@ -1582,7 +1582,7 @@ main { counter-reset: section; }
   .faq__inner { grid-template-columns: minmax(0, 1fr); }
   .faq__side { position: static; }
   .ask { rotate: 0deg; margin-top: 36px; }
-  .footer__inner { flex-direction: column; align-items: flex-start; padding-bottom: 88px; } /* room for the floating dock */
+  .footer__inner { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
