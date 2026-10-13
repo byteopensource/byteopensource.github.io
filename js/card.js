@@ -30,6 +30,7 @@
   let size = "post";
   let avatar = null;
   let avatarFor = null;
+  let upload = null; // a photo picked on this device, already cropped square
   const logo = new Image();
   logo.src = "assets/byte-logo.webp";
 
@@ -193,8 +194,9 @@
     ctx.shadowColor = "transparent";
     ctx.fillStyle = th.photo;
     ctx.fillRect(-176, -186, 352, 352);
-    if (avatar && avatarFor === d.github) {
-      ctx.drawImage(avatar, -176, -186, 352, 352);
+    const photo = upload || (avatarFor === d.github && avatar);
+    if (photo) {
+      ctx.drawImage(photo, -176, -186, 352, 352);
     } else {
       ctx.fillStyle = th === THEMES.night ? "#8ae9dd" : "#e3341e";
       ctx.textAlign = "center";
@@ -291,7 +293,7 @@
       ? `Verified ✓ You're contributor #${pad(d.number)} on the wall.`
       : d.github
         ? `@${d.github} isn't on the wall yet. Make your first PR to claim #${pad(d.nextNumber)}.`
-        : `Add your GitHub username for your photo, and your number if you're a contributor.`;
+        : `Add your GitHub username (or upload a photo), and your number if you're a contributor.`;
     canvas.setAttribute("aria-label", `${d.name}'s Open Source BYTE 2K26 card. ${status.textContent}`);
     return d;
   }
@@ -323,6 +325,51 @@
     // avatars.githubusercontent.com sends CORS headers (github.com/x.png redirects without them), so the PNG can still be exported.
     img.src = `https://avatars.githubusercontent.com/${encodeURIComponent(github)}?s=400`;
   }
+
+  // ---------- uploaded photo: check -> decode -> square-crop -> downscale. Never leaves the device ----------
+  const MAX_PHOTO = 15 * 1024 * 1024;
+  const photoInput = form.elements.cardPhoto;
+  const removePhoto = form.querySelector(".card-photo__remove");
+
+  async function usePhoto(file) {
+    if (!file) return;
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) return say("That file isn't a photo. Try a JPG, PNG or WebP.");
+    if (file.size > MAX_PHOTO) return say("That photo is over 15 MB. Try a smaller one.");
+    const url = URL.createObjectURL(file);
+    try {
+      const img = new Image();
+      img.src = url;
+      await img.decode(); // browsers apply the phone's rotation (EXIF) here
+      const side = Math.min(img.naturalWidth, img.naturalHeight);
+      const out = document.createElement("canvas");
+      out.width = out.height = 704; // 2x the polaroid window: sharp, and small enough to redraw fast
+      out.getContext("2d").drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, 704, 704);
+      upload = out;
+      removePhoto.hidden = false;
+      draw();
+      say("Photo added ✓ The middle of it goes on the card.");
+    } catch {
+      say("Couldn't read that photo. Try another one.");
+    } finally {
+      URL.revokeObjectURL(url);
+      photoInput.value = ""; // picking the same file again still works
+    }
+  }
+  function say(text) { status.textContent = text; }
+
+  photoInput.addEventListener("change", () => usePhoto(photoInput.files[0]));
+  removePhoto.addEventListener("click", () => {
+    upload = null;
+    removePhoto.hidden = true;
+    draw();
+  });
+  tiltBox.addEventListener("dragover", (e) => { e.preventDefault(); tiltBox.classList.add("is-dropping"); });
+  tiltBox.addEventListener("dragleave", () => tiltBox.classList.remove("is-dropping"));
+  tiltBox.addEventListener("drop", (e) => {
+    e.preventDefault();
+    tiltBox.classList.remove("is-dropping");
+    usePhoto(e.dataTransfer.files[0]);
+  });
 
   let typing;
   form.addEventListener("input", () => {

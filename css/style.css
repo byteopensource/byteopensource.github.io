@@ -1515,6 +1515,10 @@ main { counter-reset: section; }
 }
 .card-maker .details { position: relative; top: auto; } /* not sticky here: the preview is the tall side */
 .card-form__optional { font-weight: 500; letter-spacing: 0; text-transform: none; opacity: 0.6; }
+.card-photo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.card-photo__pick { position: relative; overflow: hidden; cursor: pointer; } /* keeps the hidden file input (width: 100% from the form styles) inside the button */
+.card-photo__pick:focus-within { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.card-maker__preview.is-dropping .card-maker__canvas { outline: 4px dashed var(--red); outline-offset: 6px; }
 .card-form__row { display: flex; flex-wrap: wrap; gap: 10px 14px; }
 .card-form__row .toggle { margin: 0; }
 .card-form__fun { margin: 0; font-size: 1.3rem; }

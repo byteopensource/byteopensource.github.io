@@ -698,6 +698,13 @@
               <label>GitHub username <span class="card-form__optional">(optional)</span>
                 <input name="cardGithub" autocapitalize="off" spellcheck="false" maxlength="39" placeholder="adds your photo and your number" />
               </label>
+              <div class="card-photo">
+                <label class="btn btn--outline card-photo__pick">Upload a photo ↑
+                  <input class="sr-only" type="file" name="cardPhoto" accept="image/png,image/jpeg,image/webp,image/gif" />
+                </label>
+                <button type="button" class="link-btn card-photo__remove" hidden>Remove photo</button>
+                <span class="card-form__optional">or drop one on the card. Beats your GitHub photo.</span>
+              </div>
               <label>From <span class="card-form__optional">(optional)</span>
                 <input name="cardFrom" maxlength="40" placeholder="college, company or city" />
               </label>
