@@ -6,7 +6,7 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 
-const REPO = process.env.GITHUB_REPOSITORY || "TheBYTEClubNIE/Open-Source_BYTE_2K26";
+const REPO = process.env.GITHUB_REPOSITORY || "byteopensource/byteopensource.github.io";
 const USERNAME = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i; // GitHub's rules
 const PR_URL = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+$/;
 // Maintainers' PRs would swamp the leaderboard. Comma-separated logins, set in the workflow.

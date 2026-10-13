@@ -17,7 +17,7 @@ email, so replying from your inbox answers them directly.
 1. **Resend: verify a domain** (Resend dashboard → Domains). You can only send *from* an address
    on a verified domain. To test before that, use `onboarding@resend.dev` as the sender, but Resend
    will then only deliver to the email you signed up to Resend with.
-2. **Vercel: import this repo.** Add New → Project → pick `TheBYTEClubNIE/Open-Source_BYTE_2K26`.
+2. **Vercel: import this repo.** Add New → Project → pick `byteopensource/byteopensource.github.io`.
    - **Root Directory: `ask-api`** (important: this keeps Vercel away from the website files)
    - Framework preset: **Other**. No build command.
 3. **Vercel: add environment variables** (Project → Settings → Environment Variables):
@@ -27,7 +27,7 @@ email, so replying from your inbox answers them directly.
    | `RESEND_API_KEY` | your Resend key (paste it here only, never in code or chat) |
    | `ASK_FROM` | e.g. `BYTE Ask Us <ask@your-verified-domain>` |
    | `ASK_TO` | optional, defaults to `thebyteclub@nie.ac.in` |
-   | `ALLOWED_ORIGINS` | optional, defaults to `https://thebyteclubnie.github.io` |
+   | `ALLOWED_ORIGINS` | optional, defaults to `https://byteopensource.github.io` (and the old address) |
 
    Then redeploy (Deployments → ⋯ → Redeploy) so the function sees them.
 4. **Copy the function's address.** It's your Vercel project URL plus `/api/ask`,

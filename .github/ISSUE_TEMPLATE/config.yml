@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Ask a question
-    url: https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask
+    url: https://byteopensource.github.io/#ask
     about: Stuck on git, your PR, or anything else? Ask on the website, publicly or by private email.
   - name: Make your first pull request
-    url: https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#first-pr
+    url: https://byteopensource.github.io/#first-pr
     about: Level 1 doesn't need an issue. Follow the guide on the website.

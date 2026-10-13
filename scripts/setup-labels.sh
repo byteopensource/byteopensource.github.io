@@ -3,7 +3,7 @@
 # Needs the GitHub CLI, logged in as a maintainer:  gh auth login
 # Run from the repo root:  bash scripts/setup-labels.sh
 set -euo pipefail
-REPO="${REPO:-TheBYTEClubNIE/Open-Source_BYTE_2K26}"
+REPO="${REPO:-byteopensource/byteopensource.github.io}"
 
 label() { gh label create "$1" --repo "$REPO" --color "$2" --description "$3" --force; }
 

@@ -29,7 +29,9 @@ jobs:
             const pr = context.payload.pull_request;
             const author = pr.user.login;
             const { owner, repo } = context.repo;
-            const site = `https://${owner.toLowerCase()}.github.io/${repo}/`;
+            // A repo named <owner>.github.io is served from the domain root; any other repo from /<repo>/.
+            const host = `${owner.toLowerCase()}.github.io`;
+            const site = repo.toLowerCase() === host ? `https://${host}/` : `https://${host}/${repo}/`;
 
             // ---------- 1. Level label from the linked issue ----------
             const linked = [...(pr.body || "").matchAll(/\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+#(\d+)/gi)].map((m) => Number(m[1]));

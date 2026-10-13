@@ -76,11 +76,11 @@ function fakeGitHub({ files = [], content = {}, onBase = [], issues = {}, commen
   return github;
 }
 
-const repoCtx = { owner: "TheBYTEClubNIE", repo: "Open-Source_BYTE_2K26" };
+const repoCtx = { owner: "byteopensource", repo: "byteopensource.github.io" };
 function prContext(author, body = "") {
   return {
     repo: repoCtx,
-    payload: { pull_request: { number: 7, user: { login: author }, body, head: { sha: "abc", repo: { name: "Open-Source_BYTE_2K26", owner: { login: author } } }, base: { ref: "main" } } },
+    payload: { pull_request: { number: 7, user: { login: author }, body, head: { sha: "abc", repo: { name: "byteopensource.github.io", owner: { login: author } } }, base: { ref: "main" } } },
   };
 }
 const names = (gh) => gh.calls.map((c) => c.name);
@@ -103,6 +103,8 @@ await test("valid Level 1 file is labelled, merged and redeployed", async () => 
   assert.equal(gh.calls[0].args.labels[0], "level-1");
   assert.equal(gh.calls[1].args.sha, "abc"); // merges exactly what was checked
   assert.match(commentText(gh), /Welcome/);
+  // An org-site repo (<owner>.github.io) is served from the domain root, not /<repo>/.
+  assert.match(commentText(gh), /\(https:\/\/byteopensource\.github\.io\/#contributors\)/);
 });
 
 await test("broken JSON gets a helpful comment and a failed check, no merge", async () => {

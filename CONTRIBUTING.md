@@ -1,7 +1,7 @@
 # Contributing to Open Source BYTE 2K26
 
 Welcome! This guide covers everything from your very first pull request to building whole features.
-If anything here is confusing, that's a bug in this guide. [Ask us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask) and then fix it in a PR. That's a great Level 2 contribution.
+If anything here is confusing, that's a bug in this guide. [Ask us](https://byteopensource.github.io/#ask) and then fix it in a PR. That's a great Level 2 contribution.
 
 **Contents:** [The rules](#the-rules) · [Level 0](#level-0--set-up) · [Level 1](#level-1--your-first-pr) · [Level 2–4](#levels-24--working-on-issues) · [Level 5](#level-5--graduate) · [Run the site locally](#run-the-site-locally) · [Code style](#code-style) · [After you open a PR](#after-you-open-a-pr) · [Common git problems](#common-git-problems)
 
@@ -27,12 +27,12 @@ If anything here is confusing, that's a bug in this guide. [Ask us](https://theb
 
 ## Level 1 · Your first PR
 
-The website has a [step-by-step guide](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#first-pr) that fills in every command with your username. The short version:
+The website has a [step-by-step guide](https://byteopensource.github.io/#first-pr) that fills in every command with your username. The short version:
 
 ```bash
 # 1. Fork the repo on GitHub, then:
-git clone https://github.com/<your-username>/Open-Source_BYTE_2K26.git
-cd Open-Source_BYTE_2K26
+git clone https://github.com/<your-username>/byteopensource.github.io.git
+cd byteopensource.github.io
 git switch -c add-<your-username>
 
 # 2. Create contributors/<your-username>.json (see below)
@@ -68,7 +68,7 @@ If something's off, it comments with exactly what to fix. Push a fix to the same
 
 ## Levels 2–4 · Working on issues
 
-1. Browse issues labelled [`level-2`](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues?q=is%3Aopen+label%3Alevel-2), [`level-3`](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues?q=is%3Aopen+label%3Alevel-3) or [`level-4`](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues?q=is%3Aopen+label%3Alevel-4). Unassigned ones are free.
+1. Browse issues labelled [`level-2`](https://github.com/byteopensource/byteopensource.github.io/issues?q=is%3Aopen+label%3Alevel-2), [`level-3`](https://github.com/byteopensource/byteopensource.github.io/issues?q=is%3Aopen+label%3Alevel-3) or [`level-4`](https://github.com/byteopensource/byteopensource.github.io/issues?q=is%3Aopen+label%3Alevel-4). Unassigned ones are free.
 2. Comment **`/assign`**. The bot assigns you and tells you your deadline.
 3. **Sync your fork first**, so you start from the latest code (see [Common git problems](#common-git-problems)).
 4. Make a branch, make the change, [test it locally](#run-the-site-locally).
@@ -78,9 +78,9 @@ If something's off, it comments with exactly what to fix. Push a fix to the same
 |---|---|---|
 | `level-2` | Docs, FAQ entries, cheat-sheet cards, README fixes | 2 |
 | `level-3` | Small code changes: bug fixes, accessibility, new terminal commands | 3 |
-| `level-4` | A whole feature. **Open a [proposal](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues/new?template=idea.yml) first** and wait for a thumbs up | 4 |
+| `level-4` | A whole feature. **Open a [proposal](https://github.com/byteopensource/byteopensource.github.io/issues/new?template=idea.yml) first** and wait for a thumbs up | 4 |
 
-Found a bug or a typo that isn't an issue yet? [Report it](https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues/new?template=bug.yml) and tick "I want to fix it". A maintainer will label it so you can claim it.
+Found a bug or a typo that isn't an issue yet? [Report it](https://github.com/byteopensource/byteopensource.github.io/issues/new?template=bug.yml) and tick "I want to fix it". A maintainer will label it so you can claim it.
 
 ## Level 5 · Graduate
 
@@ -174,7 +174,7 @@ You're pushing to the club's repo instead of your fork. Check with `git remote -
 On your fork's GitHub page click **Sync fork**, then `git pull`. Or from the terminal:
 
 ```bash
-git remote add upstream https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26.git   # once
+git remote add upstream https://github.com/byteopensource/byteopensource.github.io.git   # once
 git switch main
 git pull upstream main
 git push origin main
@@ -216,4 +216,4 @@ git config --global core.autocrlf true
 ```
 </details>
 
-Still stuck? [Ask us](https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/#ask). Paste the exact error message and what you ran.
+Still stuck? [Ask us](https://byteopensource.github.io/#ask). Paste the exact error message and what you ran.

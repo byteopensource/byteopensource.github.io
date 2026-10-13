@@ -17,7 +17,10 @@ Do these in order, on GitHub, as a repo admin.
 
 1. **Publish the site.** Settings → Pages → *Build and deployment* → Source: **GitHub Actions**.
    The `Deploy site` workflow publishes on every push to `main` and every 30 minutes.
-   The site lives at `https://thebyteclubnie.github.io/Open-Source_BYTE_2K26/`. If that ever changes, update the URLs in `index.html` (`og:` tags), `404.html`, and `.github/ISSUE_TEMPLATE/config.yml`.
+   The site lives at `https://byteopensource.github.io/`. That root address comes from the repo's name: a repo called
+   `byteopensource.github.io` in the `byteopensource` organization. **Don't rename the repo**, or the site moves.
+   If the address ever does change, search the repo for `byteopensource.github.io` and update every match, including the
+   `<base>` tag in `404.html`, and `ALLOWED_ORIGINS` for the email function in Vercel.
 2. **Turn on Discussions.** Settings → General → Features → **Discussions**. Keep the default **Q&A** category: the website's *Ask Us* form opens it by its address (`q-a`).
 3. **Create the labels:** `bash scripts/setup-labels.sh` (needs the [GitHub CLI](https://cli.github.com), `gh auth login` first).
 4. **Create the starter issues:** `node scripts/create-starter-issues.mjs` shows the list. Add `--create` to open them. Then **pin** the *Introduce yourself* issue.

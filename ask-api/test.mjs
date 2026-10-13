@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import handler, { validate, buildEmail } from "./api/ask.js";
 
-const SITE = "https://thebyteclubnie.github.io";
+const SITE = "https://byteopensource.github.io";
 let passed = 0;
 async function test(name, fn) { await fn(); passed++; console.log("ok -", name); }
 

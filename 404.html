@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- GitHub Pages serves this page at ANY broken address (even /a/b/c), so every link resolves from the site root. -->
-  <base href="/Open-Source_BYTE_2K26/" />
+  <base href="/" />
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#b8def2" />
   <title>Wrong turn · Open Source BYTE 2K26</title>
@@ -42,7 +42,7 @@
 
         <div class="lost__actions">
           <a class="btn" href="./">Take me home <span aria-hidden="true">→</span></a>
-          <a class="btn btn--outline lost__report" href="https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26/issues/new?template=bug.yml" target="_blank" rel="noopener">Report this broken link <span aria-hidden="true">↗</span></a>
+          <a class="btn btn--outline lost__report" href="https://github.com/byteopensource/byteopensource.github.io/issues/new?template=bug.yml" target="_blank" rel="noopener">Report this broken link <span aria-hidden="true">↗</span></a>
         </div>
 
         <p class="lost__or hand">or jump straight to</p>
@@ -110,8 +110,8 @@
 
   <script>
     // The address they tried, without the site's base path. Only ever written with textContent.
-    const ROOT = "/Open-Source_BYTE_2K26/";
-    const REPO = "https://github.com/TheBYTEClubNIE/Open-Source_BYTE_2K26";
+    const ROOT = "/";
+    const REPO = "https://github.com/byteopensource/byteopensource.github.io";
     const raw = location.pathname.startsWith(ROOT) ? location.pathname.slice(ROOT.length) : location.pathname.slice(1);
     let tried = raw;
     try { tried = decodeURIComponent(raw); } catch {}
