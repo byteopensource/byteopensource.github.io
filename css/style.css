@@ -1340,18 +1340,92 @@ main { counter-reset: section; }
 .shortcuts__label { margin: 0 0 8px; font-size: 0.85rem; }
 .shortcuts__badge { display: block; margin-bottom: 10px; }
 
-/* ---------- Git, Decoded: glossary ---------- */
-.glossary__title { margin: 56px 0 16px; font-size: 1.9rem; font-weight: 700; }
+/* ---------- Git, Decoded: glossary flashcards ---------- */
+.glossary__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin: 64px 0 24px;
+}
+.glossary__title { margin: 0; font-size: 1.9rem; font-weight: 700; }
+.glossary__progress { margin: 4px 0 10px; font-size: 0.92rem; }
+.glossary__progress b { font: 400 1.5rem/1 var(--font-display); color: var(--red); }
+.glossary__meter {
+  width: min(320px, 100%);
+  height: 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+  overflow: hidden;
+}
+.glossary__meter i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--red); transition: width 0.4s ease; }
+.glossary__actions { margin: 0; font-family: var(--font-hand); font-size: 1.3rem; }
+
 .glossary {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 22px 18px;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.word { padding: 14px 16px; background: var(--paper); border-left: 4px solid var(--red); }
-.word dt { font-weight: 700; }
-.word dd { margin: 4px 0 0; font-size: 0.9rem; }
-.word code { font-size: 0.85em; padding: 1px 5px; border-radius: 4px; background: var(--tint); }
+.word { perspective: 1000px; rotate: -1deg; transition: translate 0.2s; }
+.word:nth-child(even) { rotate: 1.2deg; }
+.word:nth-child(3n) { rotate: -0.4deg; }
+.word:hover { translate: 0 -4px; }
+
+/* The card turns over in 3D. Both faces share one grid cell, so it is as tall as the longer side. */
+.word__card {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+.word__card.is-flipped { transform: rotateY(180deg); }
+.word__card:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+
+.word__face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 18px 16px;
+  border-radius: 4px;
+  box-shadow: 0 10px 22px rgb(22 33 62 / 0.13);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* Front: an index card, with a red rule and faint blue lines */
+.word__face--front {
+  background:
+    linear-gradient(var(--red), var(--red)) 0 40px / 100% 2px no-repeat,
+    repeating-linear-gradient(transparent 0 27px, color-mix(in srgb, var(--sky) 70%, transparent) 27px 28px) 0 42px / 100% calc(100% - 42px) no-repeat,
+    var(--paper);
+}
+.word__num { font: 700 1.05rem var(--font-hand); color: var(--red); }
+.word.is-learned .word__num::after { content: "  ✓ learned"; font-size: 0.95rem; color: var(--ink); opacity: 0.6; }
+.word__term { margin-top: auto; font: 400 1.55rem/1.05 var(--font-display); color: var(--red); }
+.word__hint { font: 500 1rem var(--font-hand); opacity: 0.55; }
+
+/* Back: a sticky note with the meaning */
+.word__face--back { transform: rotateY(180deg); background: var(--yellow); color: var(--ink); }
+.word__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+.word__def { font-size: 0.95rem; line-height: 1.5; }
+.word__def code { font-size: 0.85em; padding: 1px 5px; border-radius: 4px; background: rgb(255 255 255 / 0.55); }
+
+/* Deal the cards in when the glossary first scrolls into view */
+.glossary.is-dealt .word { animation: deal 0.55s cubic-bezier(0.3, 1.4, 0.5, 1) backwards; animation-delay: calc(var(--i) * 45ms); }
+@keyframes deal { from { opacity: 0; transform: translateY(60px) rotate(-10deg) scale(0.85); } }
 
 /* ---------- Beyond BYTE ---------- */
 .programs {

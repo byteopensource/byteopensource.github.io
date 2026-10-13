@@ -420,7 +420,7 @@ fetch("stats.json")
 // ---------- Git, Decoded: filter the cards as you type ----------
 const cheatSearch = document.querySelector(".cheats__search input");
 const cheats = [...document.querySelectorAll(".cheat, .word")]; // commands and glossary words
-const glossaryTitle = document.querySelector(".glossary__title");
+const glossaryTitle = document.querySelector(".glossary__head");
 cheatSearch.addEventListener("input", () => {
   const words = cheatSearch.value.toLowerCase().split(/\s+/).filter(Boolean);
   let visible = 0;
@@ -432,6 +432,56 @@ cheatSearch.addEventListener("input", () => {
   glossaryTitle.hidden = !document.querySelector(".word:not([hidden])");
   document.querySelector(".cheats__empty").hidden = visible > 0;
 });
+
+// ---------- Git, Decoded: glossary flashcards ----------
+const glossary = document.querySelector(".glossary");
+const wordCards = [...glossary.querySelectorAll(".word__card")];
+const flipAllBtn = document.querySelector(".glossary__flip-all");
+const WORDS_KEY = "byte-words";
+let learned = new Set();
+try { learned = new Set(JSON.parse(localStorage.getItem(WORDS_KEY)) || []); } catch {}
+
+function flipCard(card, on) {
+  card.classList.toggle("is-flipped", on);
+  card.setAttribute("aria-pressed", on);
+}
+
+function showLearned() {
+  wordCards.forEach((card, i) => card.parentElement.classList.toggle("is-learned", learned.has(i)));
+  document.querySelector(".glossary__progress b").textContent = learned.size;
+  document.querySelector(".glossary__meter i").style.width = `${(learned.size / wordCards.length) * 100}%`;
+  flipAllBtn.textContent = wordCards.every((c) => c.classList.contains("is-flipped")) ? "hide answers" : "show all answers";
+  try { localStorage.setItem(WORDS_KEY, JSON.stringify([...learned])); } catch {}
+}
+
+wordCards.forEach((card, i) =>
+  card.addEventListener("click", () => {
+    const on = !card.classList.contains("is-flipped");
+    flipCard(card, on);
+    const isNew = on && !learned.has(i);
+    if (isNew) learned.add(i);
+    showLearned();
+    if (isNew && learned.size === wordCards.length) {
+      confetti(140);
+      toast(`All ${wordCards.length} words learned ✱ You speak Git now.`);
+    }
+  })
+);
+
+flipAllBtn.addEventListener("click", () => {
+  const show = wordCards.some((c) => !c.classList.contains("is-flipped"));
+  wordCards.forEach((c) => flipCard(c, show)); // reading mode, doesn't count as learning
+  showLearned();
+});
+
+document.querySelector(".glossary__reset").addEventListener("click", () => {
+  learned.clear();
+  wordCards.forEach((c) => flipCard(c, false));
+  showLearned();
+});
+
+showLearned();
+onceVisible(glossary, () => glossary.classList.add("is-dealt")); // cards deal in like a hand of cards
 
 // ---------- From the Blog: blogs.json, newest first ----------
 const blogSection = document.getElementById("blog");
